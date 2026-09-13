@@ -1,0 +1,3480 @@
+
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="description" content="pH-CHECK PRO — промышленный инструмент контроля кислотности для технологов и QA-лабораторий. Нормы ХАССП, ТР ТС 021/2011.">
+<title>pH-CHECK PRO v1.0 · NEURAL_ARCHITECT_PREMIUM++</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root {
+  --bg-0: #0A0E13;
+  --bg-1: #0F141B;
+  --bg-2: #141A23;
+  --bg-3: #1A222E;
+  --bg-4: #202A38;
+
+  --border: rgba(255,255,255,0.075);
+  --border-2: rgba(255,255,255,0.13);
+  --border-3: rgba(255,255,255,0.20);
+
+  --text-0: #E9EDF2;
+  --text-1: #98A3B2;
+  --text-2: #5D6875;
+  --text-3: #3D4654;
+
+  --lime: #A3E635;
+  --lime-dim: rgba(163,230,53,0.14);
+  --cyan: #22D3EE;
+  --cyan-dim: rgba(34,211,238,0.14);
+  --amber: #F59E0B;
+  --amber-dim: rgba(245,158,11,0.14);
+  --rose: #FB7185;
+  --rose-dim: rgba(251,113,133,0.14);
+
+  --grid: rgba(255,255,255,0.026);
+
+  --inset-hi: inset 0 1px 0 rgba(255,255,255,0.035);
+
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+
+  --t-fast: 120ms cubic-bezier(.4,0,.2,1);
+  --t-base: 200ms cubic-bezier(.4,0,.2,1);
+}
+
+[data-theme="light"] {
+  --bg-0: #F5F7FA;
+  --bg-1: #FFFFFF;
+  --bg-2: #F2F5F8;
+  --bg-3: #E9EEF4;
+  --bg-4: #DEE5EE;
+
+  --border: rgba(10,14,19,0.09);
+  --border-2: rgba(10,14,19,0.16);
+  --border-3: rgba(10,14,19,0.26);
+
+  --text-0: #0D1319;
+  --text-1: #4C5766;
+  --text-2: #7A8593;
+  --text-3: #A7B0BB;
+
+  --lime: #4D7C0F;
+  --lime-dim: rgba(101,163,13,0.12);
+  --cyan: #0E7490;
+  --cyan-dim: rgba(8,145,178,0.12);
+  --amber: #B45309;
+  --amber-dim: rgba(217,119,6,0.12);
+  --rose: #BE123C;
+  --rose-dim: rgba(225,29,72,0.10);
+
+  --grid: rgba(10,14,19,0.032);
+  --inset-hi: inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+/* ============================================================
+   RESET / BASE
+   ============================================================ */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text-0);
+  background: var(--bg-0);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1100px 620px at 18% -8%, rgba(34,211,238,0.055), transparent 62%),
+    radial-gradient(900px 520px at 88% -4%, rgba(163,230,53,0.042), transparent 62%);
+}
+[data-theme="light"] body::after {
+  background:
+    radial-gradient(1100px 620px at 18% -8%, rgba(8,145,178,0.05), transparent 62%),
+    radial-gradient(900px 520px at 88% -4%, rgba(101,163,13,0.045), transparent 62%);
+}
+
+.app { position: relative; z-index: 1; }
+
+button, input, select, textarea { font: inherit; color: inherit; background: none; border: none; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+::selection { background: rgba(163,230,53,0.28); }
+:focus-visible { outline: 1.5px solid var(--lime); outline-offset: 2px; }
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--bg-4);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--border-3); background-clip: content-box; }
+
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+
+/* ============================================================
+   TOPBAR
+   ============================================================ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--inset-hi);
+}
+
+.topbar-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+.brand-glyph {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  background: var(--bg-2);
+  color: var(--lime);
+  box-shadow: var(--inset-hi);
+  flex-shrink: 0;
+}
+.brand-glyph svg { width: 17px; height: 17px; }
+
+.brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+.brand-name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-0);
+}
+.brand-sub {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+  margin-top: 1px;
+}
+
+.ver-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  color: var(--text-1);
+  background: var(--bg-2);
+}
+
+.sys-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px 5px 9px;
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  background: var(--bg-2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-1);
+  white-space: nowrap;
+  box-shadow: var(--inset-hi);
+}
+
+.led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lime);
+  flex-shrink: 0;
+  transition: background var(--t-base);
+}
+[data-status="measuring"] .led { background: var(--cyan); animation: ledBlink 1.1s ease-in-out infinite; }
+[data-status="calibration"] .led { background: var(--amber); }
+[data-status="fault"] .led { background: var(--rose); }
+
+@keyframes ledBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.32; }
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 9px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-1);
+  white-space: nowrap;
+}
+.status-pill .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--lime); }
+[data-status="measuring"] .status-pill { color: var(--cyan); border-color: rgba(34,211,238,0.35); }
+[data-status="measuring"] .status-pill .dot { background: var(--cyan); }
+
+.topbar-spacer { flex: 1 1 auto; min-width: 8px; }
+.tools { display: flex; align-items: center; gap: 6px; }
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-2);
+  color: var(--text-1);
+  box-shadow: var(--inset-hi);
+  transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
+  flex-shrink: 0;
+}
+.icon-btn:hover { color: var(--text-0); border-color: var(--border-3); background: var(--bg-3); }
+.icon-btn:active { background: var(--bg-2); }
+.icon-btn svg { width: 15px; height: 15px; }
+
+.author-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 11px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-1);
+  box-shadow: var(--inset-hi);
+  transition: color var(--t-fast), border-color var(--t-fast);
+  white-space: nowrap;
+}
+.author-chip:hover { color: var(--cyan); border-color: rgba(34,211,238,0.4); }
+.author-chip svg { width: 13px; height: 13px; }
+
+/* ============================================================
+   TOOLBAR STRIP
+   ============================================================ */
+.strip { border-bottom: 1px solid var(--border); background: var(--bg-1); }
+.strip-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.strip-inner::-webkit-scrollbar { display: none; }
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+.crumbs .sep { color: var(--text-3); }
+.crumbs .cur { color: var(--text-0); font-weight: 600; }
+
+.strip-spacer { flex: 1 1 auto; }
+
+.telemetry {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+.telemetry .tm { display: inline-flex; align-items: baseline; gap: 6px; }
+.telemetry .tm b { font-weight: 500; color: var(--text-1); }
+.telemetry .tm span { color: var(--text-2); text-transform: uppercase; font-size: 9.5px; letter-spacing: 0.08em; }
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.layout {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 372px;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ============================================================
+   PANEL
+   ============================================================ */
+.panel {
+  position: relative;
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--inset-hi);
+}
+
+.panel::before, .panel::after {
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  pointer-events: none;
+  opacity: 0.28;
+  transition: opacity var(--t-base);
+  color: var(--lime);
+}
+.panel::before {
+  top: 7px; left: 7px;
+  border-top: 1.5px solid currentColor;
+  border-left: 1.5px solid currentColor;
+  border-top-left-radius: 3px;
+}
+.panel::after {
+  bottom: 7px; right: 7px;
+  border-bottom: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  border-bottom-right-radius: 3px;
+}
+.panel:hover::before, .panel:hover::after { opacity: 0.62; }
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.panel-head svg { width: 14px; height: 14px; color: var(--lime); flex-shrink: 0; }
+.panel-head .ph-title {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-1);
+}
+.panel-head .ph-right { margin-left: auto; }
+
+.panel-body { padding: 18px; }
+
+.lbl {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+/* ============================================================
+   PRODUCT PICKER TRIGGER
+   ============================================================ */
+.picker-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  background: var(--bg-2);
+  box-shadow: var(--inset-hi);
+  text-align: left;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.picker-trigger:hover { border-color: var(--border-3); background: var(--bg-3); }
+.picker-trigger svg { width: 15px; height: 15px; color: var(--text-2); flex-shrink: 0; }
+
+.picker-trigger-label {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.picker-trigger-label.has-value { color: var(--text-0); font-weight: 500; }
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 6px;
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  background: var(--bg-3);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   SPEC CARD
+   ============================================================ */
+.spec-card {
+  margin-top: 12px;
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  background: var(--bg-2);
+  box-shadow: var(--inset-hi);
+  overflow: hidden;
+  display: none;
+}
+.spec-card.visible { display: block; }
+
+.spec-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.spec-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--text-0);
+  line-height: 1.3;
+}
+.spec-cat {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  color: var(--text-1);
+  background: var(--bg-3);
+  white-space: nowrap;
+}
+
+.spec-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); }
+.spec-cell { padding: 10px 14px; border-right: 1px solid var(--border); }
+.spec-cell:last-child { border-right: none; }
+.spec-cell .k {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-bottom: 3px;
+}
+.spec-cell .v {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-0);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.spec-cell .v.lime { color: var(--lime); }
+
+/* ============================================================
+   MEASURE BLOCK
+   ============================================================ */
+.measure { margin-top: 20px; }
+.measure-row { display: flex; align-items: stretch; gap: 8px; }
+
+.step-btn {
+  width: 48px;
+  min-height: 56px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  background: var(--bg-2);
+  color: var(--text-1);
+  box-shadow: var(--inset-hi);
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+  flex-shrink: 0;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.step-btn:hover { background: var(--bg-3); color: var(--text-0); border-color: var(--border-3); }
+.step-btn:active { background: var(--bg-4); transform: translateY(1px); }
+.step-btn svg { width: 16px; height: 16px; }
+
+.ph-field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  background: var(--bg-2);
+  box-shadow: var(--inset-hi);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.ph-field:focus-within {
+  border-color: rgba(163,230,53,0.55);
+  box-shadow: var(--inset-hi), 0 0 0 3px rgba(163,230,53,0.10);
+}
+
+.ph-field input {
+  flex: 1;
+  min-width: 0;
+  height: 56px;
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--text-0);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+.ph-field input::placeholder { color: var(--text-3); font-weight: 400; }
+
+.ph-field .unit {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+  flex-shrink: 0;
+}
+
+/* Rail */
+.rail-wrap { margin-top: 12px; padding: 0 1px; }
+.rail { position: relative; height: 30px; cursor: pointer; touch-action: none; }
+.rail-track {
+  position: absolute;
+  left: 9px; right: 9px; top: 50%;
+  height: 6px;
+  transform: translateY(-50%);
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.rail-norm {
+  position: absolute;
+  top: 0; bottom: 0;
+  background: var(--lime);
+  opacity: 0.6;
+  transition: left var(--t-base), width var(--t-base);
+}
+.rail-amber-l, .rail-amber-r {
+  position: absolute; top: 0; bottom: 0;
+  background: var(--amber);
+  opacity: 0.55;
+  transition: left var(--t-base), width var(--t-base);
+}
+.rail-thumb {
+  position: absolute;
+  top: 50%;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--bg-1);
+  border: 2px solid var(--text-0);
+  transform: translate(-50%, -50%);
+  transition: left 80ms linear, border-color var(--t-fast);
+  pointer-events: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+}
+.rail:hover .rail-thumb { border-color: var(--lime); }
+.rail-thumb.is-empty { border-color: var(--text-3); opacity: 0.55; }
+
+.rail-scale {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+}
+
+/* ============================================================
+   GAUGE
+   ============================================================ */
+.gauge-wrap {
+  margin-top: 22px;
+  padding: 8px 0 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gauge-svg {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  display: block;
+  color: var(--text-2);
+  overflow: visible;
+}
+
+.gauge-needle {
+  transform-box: view-box;
+  transform-origin: 240px 252px;
+  transition: transform 220ms cubic-bezier(.4,0,.2,1), opacity 160ms linear;
+  color: var(--text-0);
+}
+.gauge-needle.is-empty { opacity: 0; }
+
+.gauge-readout {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.gauge-value {
+  font-family: var(--font-mono);
+  font-size: clamp(46px, 7.4vw, 68px);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text-3);
+  transition: color var(--t-base);
+}
+.gauge-value.ok { color: var(--lime); }
+.gauge-value.near { color: var(--amber); }
+.gauge-value.critical { color: var(--rose); }
+
+.gauge-unit {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.gauge-legend {
+  display: flex;
+  gap: 18px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.legend-swatch { width: 14px; height: 6px; border-radius: 1.5px; flex-shrink: 0; }
+.legend-swatch.lime { background: var(--lime); }
+.legend-swatch.amber { background: var(--amber); }
+.legend-swatch.rose { background: var(--rose); opacity: 0.45; }
+
+/* ============================================================
+   CHART
+   ============================================================ */
+.chart-section {
+  margin-top: 20px;
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  background: var(--bg-2);
+  box-shadow: var(--inset-hi);
+  overflow: hidden;
+}
+
+.chart-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.chart-head svg { width: 14px; height: 14px; color: var(--cyan); flex-shrink: 0; }
+.chart-title {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-1);
+}
+.chart-meta {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 55%;
+}
+
+.chart-body {
+  position: relative;
+  padding: 14px 12px 10px;
+  height: 240px;
+}
+.chart-body canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.chart-empty {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  pointer-events: none;
+}
+.chart-empty.visible { display: flex; }
+.chart-empty b { color: var(--text-2); font-weight: 600; }
+
+/* ============================================================
+   VERDICT
+   ============================================================ */
+.verdict {
+  margin-top: 20px;
+  display: none;
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  background: var(--bg-2);
+  box-shadow: var(--inset-hi);
+  overflow: hidden;
+  position: relative;
+  padding-left: 4px;
+}
+.verdict.visible { display: block; }
+.verdict::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--lime);
+}
+.verdict.near::before { background: var(--amber); }
+.verdict.critical::before { background: var(--rose); }
+
+.verdict-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 12px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.verdict-stamp { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.verdict-stamp .mark {
+  width: 22px; height: 22px;
+  display: grid; place-items: center;
+  border: 1.5px solid currentColor;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.verdict-stamp .mark svg { width: 13px; height: 13px; }
+
+.verdict.ok .verdict-stamp { color: var(--lime); }
+.verdict.near .verdict-stamp { color: var(--amber); }
+.verdict.critical .verdict-stamp { color: var(--rose); }
+
+.verdict-status {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.verdict-spacer { flex: 1; }
+
+.verdict-haccp {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  opacity: 0.85;
+}
+.verdict.ok .verdict-haccp { color: var(--lime); }
+.verdict.near .verdict-haccp { color: var(--amber); }
+.verdict.critical .verdict-haccp { color: var(--rose); }
+
+.verdict-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.verdict-cell { padding: 12px 16px 14px 18px; border-right: 1px solid var(--border); }
+.verdict-cell:last-child { border-right: none; }
+.verdict-cell .k {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-bottom: 4px;
+}
+.verdict-cell .v {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-0);
+  white-space: nowrap;
+}
+.verdict.ok .verdict-cell .v.delta { color: var(--lime); }
+.verdict.near .verdict-cell .v.delta { color: var(--amber); }
+.verdict.critical .verdict-cell .v.delta { color: var(--rose); }
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+.actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.act-btn {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-sm);
+  background: var(--bg-2);
+  color: var(--text-1);
+  box-shadow: var(--inset-hi);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-tap-highlight-color: transparent;
+}
+.act-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+.act-btn:hover:not(:disabled) { background: var(--bg-3); color: var(--text-0); border-color: var(--border-3); }
+.act-btn:active:not(:disabled) { background: var(--bg-4); transform: translateY(1px); }
+.act-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.act-btn.primary {
+  border-color: rgba(163,230,53,0.4);
+  color: var(--lime);
+  background: var(--lime-dim);
+}
+.act-btn.primary:hover:not(:disabled) {
+  background: rgba(163,230,53,0.2);
+  border-color: rgba(163,230,53,0.6);
+  color: var(--lime);
+}
+
+.act-btn .full-label { overflow: hidden; text-overflow: ellipsis; }
+.act-btn .short-label { display: none; }
+
+/* ============================================================
+   SIDEBAR / JOURNAL
+   ============================================================ */
+.sidebar {
+  position: sticky;
+  top: 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.journal-head {
+  display: grid;
+  grid-template-columns: 44px minmax(0,1fr) 46px 18px 40px 22px;
+  gap: 6px;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.journal-head span:nth-child(3),
+.journal-head span:nth-child(5) { text-align: right; }
+.journal-head span:nth-child(4) { text-align: center; }
+
+.journal-body { max-height: 420px; overflow-y: auto; overscroll-behavior: contain; }
+
+.j-row {
+  display: grid;
+  grid-template-columns: 44px minmax(0,1fr) 46px 18px 40px 22px;
+  gap: 6px;
+  align-items: center;
+  height: 40px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  position: relative;
+  transition: background var(--t-fast);
+  cursor: pointer;
+}
+.j-row:last-child { border-bottom: none; }
+.j-row:hover { background: var(--bg-2); }
+
+.j-time { color: var(--text-2); font-size: 10px; letter-spacing: 0.02em; }
+.j-name {
+  color: var(--text-0);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.j-ph { text-align: right; font-weight: 600; color: var(--text-0); }
+.j-ph.ok { color: var(--lime); }
+.j-ph.near { color: var(--amber); }
+.j-ph.critical { color: var(--rose); }
+
+.j-dot { display: flex; justify-content: center; }
+.j-dot i { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); display: block; }
+.j-dot i.near { background: var(--amber); }
+.j-dot i.critical { background: var(--rose); }
+
+.j-delta { text-align: right; color: var(--text-2); font-size: 10.5px; }
+
+.j-del {
+  width: 22px; height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  color: var(--text-3);
+  opacity: 0;
+  transition: opacity var(--t-fast), color var(--t-fast), background var(--t-fast);
+}
+.j-del svg { width: 12px; height: 12px; }
+.j-row:hover .j-del { opacity: 1; }
+.j-del:hover { color: var(--rose); background: var(--rose-dim); }
+
+.journal-empty {
+  padding: 30px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+.journal-empty svg { width: 132px; height: 88px; color: var(--text-3); opacity: 0.7; }
+.journal-empty .t1 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.journal-empty .t2 {
+  font-size: 11.5px;
+  color: var(--text-3);
+  max-width: 240px;
+  line-height: 1.5;
+}
+
+.journal-foot {
+  padding: 12px 14px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.session-summary {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  color: var(--text-2);
+  text-align: right;
+  line-height: 1.6;
+}
+.session-summary b { color: var(--text-0); font-weight: 600; }
+.session-summary .ok { color: var(--lime); }
+.session-summary .bad { color: var(--rose); }
+
+.ghost-btn {
+  width: 100%;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+.ghost-btn svg { width: 13px; height: 13px; }
+.ghost-btn:hover { color: var(--text-0); border-color: var(--border-3); background: var(--bg-2); }
+.ghost-btn.danger:hover { color: var(--rose); border-color: rgba(251,113,133,0.4); background: var(--rose-dim); }
+.ghost-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.kbd-help { padding: 14px 16px; display: flex; flex-direction: column; gap: 9px; }
+.kbd-help-row { display: flex; align-items: center; gap: 10px; font-size: 11.5px; color: var(--text-1); }
+.kbd-help-row .kk { flex-shrink: 0; }
+.kbd-help-row .vv { color: var(--text-2); }
+
+/* ============================================================
+   COMMAND PALETTE
+   ============================================================ */
+.palette-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(5,8,12,0.62);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 80px 20px 20px;
+}
+[data-theme="light"] .palette-overlay { background: rgba(20,28,38,0.28); }
+.palette-overlay.open { display: flex; }
+
+.palette {
+  width: 100%;
+  max-width: 620px;
+  max-height: calc(100vh - 140px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-1);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-lg);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5), var(--inset-hi);
+  overflow: hidden;
+  animation: paletteIn 140ms cubic-bezier(.4,0,.2,1);
+}
+@keyframes paletteIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.995); }
+  to { opacity: 1; transform: none; }
+}
+
+.palette-search {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.palette-search svg { width: 16px; height: 16px; color: var(--text-2); flex-shrink: 0; }
+.palette-search input {
+  flex: 1;
+  min-width: 0;
+  height: 26px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-0);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+.palette-search input::placeholder { color: var(--text-3); }
+
+.palette-list { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 6px; }
+
+.pal-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  text-align: left;
+  transition: background var(--t-fast);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.pal-item.active { background: var(--bg-3); }
+.pal-item.active .pal-item-name { color: var(--text-0); }
+
+.pal-item-main { flex: 1; min-width: 0; }
+.pal-item-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-1);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pal-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.pal-item-meta .chip {
+  padding: 2px 6px;
+  border: 1px solid var(--border-2);
+  border-radius: 3px;
+  color: var(--text-1);
+  background: var(--bg-2);
+}
+.pal-item-meta .src { color: var(--text-3); letter-spacing: 0.04em; }
+
+.pal-item-norm {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--lime);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.pal-empty {
+  padding: 34px 16px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.palette-foot {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  flex-wrap: wrap;
+}
+.palette-foot span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* ============================================================
+   TOASTS
+   ============================================================ */
+.toast-stack {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+  max-width: min(420px, calc(100vw - 40px));
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px 9px 12px;
+  border: 1px solid var(--border-2);
+  border-left-width: 2px;
+  border-left-color: var(--lime);
+  border-radius: 4px;
+  background: var(--bg-1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--text-1);
+  opacity: 0;
+  transform: translateX(12px);
+  transition: opacity 180ms cubic-bezier(.4,0,.2,1), transform 180ms cubic-bezier(.4,0,.2,1);
+}
+.toast.show { opacity: 1; transform: none; }
+.toast.warn { border-left-color: var(--amber); }
+.toast.err { border-left-color: var(--rose); }
+
+.toast .ts { color: var(--text-3); font-size: 10px; flex-shrink: 0; }
+.toast .msg { color: var(--text-0); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  max-width: 1240px;
+  margin: 8px auto 0;
+  padding: 20px 20px 36px;
+  border-top: 1px solid var(--border);
+}
+.footer-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  line-height: 1.9;
+}
+.footer-line + .footer-line { margin-top: 3px; }
+.footer-line .sep { color: var(--text-3); opacity: 0.55; }
+.footer-line b { color: var(--text-2); font-weight: 500; }
+.footer-line a {
+  color: var(--text-2);
+  border-bottom: 1px dotted var(--border-3);
+  transition: color var(--t-fast), border-color var(--t-fast);
+}
+.footer-line a:hover { color: var(--cyan); border-bottom-color: var(--cyan); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1080px) {
+  .layout { grid-template-columns: minmax(0, 1fr); padding: 16px; gap: 16px; }
+  .sidebar { position: static; }
+}
+
+@media (max-width: 900px) {
+  .topbar-inner { padding: 0 12px; gap: 8px; }
+  .ver-tag { display: none; }
+  .sys-chip { font-size: 9.5px; padding: 4px 8px; gap: 6px; }
+  .status-pill { font-size: 9.5px; padding: 3px 8px; }
+  .strip-inner { padding: 0 12px; gap: 12px; }
+  .telemetry { gap: 12px; }
+  .telemetry .tm span { display: none; }
+  .panel-body { padding: 16px; }
+  .panel-head { padding: 13px 16px; }
+}
+
+@media (max-width: 800px) {
+  .actions { grid-template-columns: 1fr 1fr; }
+  .act-btn .full-label { display: none; }
+  .act-btn .short-label { display: inline; }
+}
+
+@media (max-width: 720px) {
+  .brand-text { display: none; }
+  .brand { gap: 0; }
+  .topbar-inner { height: 50px; }
+  .telemetry .tm { gap: 4px; }
+  .spec-grid { grid-template-columns: 1fr 1fr; }
+  .spec-cell:nth-child(2) { border-right: none; }
+  .spec-cell:nth-child(3) { grid-column: 1 / -1; border-top: 1px solid var(--border); }
+  .verdict-grid { grid-template-columns: 1fr 1fr; }
+  .verdict-cell:nth-child(2) { border-right: none; }
+  .verdict-cell:nth-child(3),
+  .verdict-cell:nth-child(4) { border-top: 1px solid var(--border); }
+  .verdict-cell:nth-child(4) { border-right: none; }
+}
+
+@media (max-width: 560px) {
+  body { font-size: 13px; }
+
+  .topbar-inner { padding: 0 10px; gap: 6px; height: 48px; }
+  .brand-glyph { width: 28px; height: 28px; border-radius: 7px; }
+  .brand-glyph svg { width: 15px; height: 15px; }
+  .sys-chip { padding: 3px 7px; font-size: 9px; gap: 5px; }
+  .sys-chip .sys-text { display: none; }
+  .status-pill { padding: 3px 7px; font-size: 9px; gap: 5px; }
+  .status-pill .status-text { display: none; }
+  .author-chip { display: none; }
+  .icon-btn { width: 32px; height: 32px; }
+
+  .strip-inner { padding: 0 10px; height: 34px; gap: 10px; }
+  .crumbs { font-size: 9px; gap: 5px; }
+  .telemetry { display: none; }
+
+  .layout { padding: 10px; gap: 12px; }
+  .panel-body { padding: 13px; }
+  .panel-head { padding: 12px 14px; }
+  .panel-head .ph-title { font-size: 10px; }
+  .panel-head .ph-right { font-size: 9px; }
+
+  .picker-trigger { padding: 11px 12px; gap: 10px; }
+  .picker-trigger-label { font-size: 12px; }
+
+  .spec-top { padding: 11px 12px; gap: 8px; }
+  .spec-name { font-size: 13px; }
+  .spec-cat { font-size: 9px; padding: 2px 6px; }
+  .spec-cell { padding: 9px 12px; }
+  .spec-cell .v { font-size: 12px; }
+
+  .measure-row { gap: 6px; }
+  .step-btn { width: 42px; min-height: 52px; }
+  .step-btn svg { width: 15px; height: 15px; }
+  .ph-field { padding: 0 12px; gap: 8px; }
+  .ph-field input { height: 52px; font-size: 24px; }
+  .ph-field .unit { font-size: 11px; }
+
+  .rail { height: 34px; }
+  .rail-thumb { width: 20px; height: 20px; }
+  .rail-scale { font-size: 9px; }
+
+  .gauge-wrap { margin-top: 18px; }
+  .gauge-legend { gap: 12px; margin-top: 12px; }
+  .legend-item { font-size: 9px; gap: 5px; }
+  .legend-swatch { width: 12px; height: 5px; }
+
+  .chart-body { height: 200px; padding: 10px 8px 6px; }
+  .chart-meta { font-size: 9px; max-width: 50%; }
+
+  .verdict-head { padding: 12px 14px 10px 16px; gap: 10px; flex-wrap: wrap; }
+  .verdict-status { font-size: 11px; }
+  .verdict-haccp { font-size: 9px; padding: 3px 6px; }
+  .verdict-cell { padding: 10px 14px 12px 16px; }
+  .verdict-cell .v { font-size: 12.5px; }
+
+  .actions { grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 16px; }
+  .act-btn { min-height: 44px; font-size: 10px; padding: 0 8px; gap: 6px; }
+  .act-btn svg { width: 13px; height: 13px; }
+
+  .journal-head { grid-template-columns: 40px minmax(0,1fr) 42px 16px 34px 20px; padding: 8px 12px; gap: 5px; }
+  .j-row { grid-template-columns: 40px minmax(0,1fr) 42px 16px 34px 20px; padding: 0 12px; gap: 5px; height: 38px; font-size: 10.5px; }
+  .j-time { font-size: 9.5px; }
+  .j-delta { font-size: 10px; }
+  .j-del { opacity: 1; }
+
+  .footer { padding: 16px 14px 28px; }
+  .footer-line { font-size: 9.5px; gap: 7px; }
+
+  .palette-overlay { padding: 60px 12px 12px; }
+  .palette-search { padding: 11px 14px; }
+  .palette-search input { font-size: 12px; }
+  .pal-item { padding: 9px 10px; gap: 10px; }
+  .pal-item-name { font-size: 12.5px; }
+  .pal-item-norm { font-size: 11px; }
+
+  .toast-stack { right: 12px; bottom: 12px; left: 12px; max-width: none; }
+  .toast { font-size: 10.5px; padding: 8px 12px 8px 10px; }
+}
+
+@media (max-width: 420px) {
+  .brand-glyph { display: none; }
+  .status-pill { display: none; }
+  .actions { grid-template-columns: 1fr; }
+  .verdict-grid { grid-template-columns: 1fr; }
+  .verdict-cell { border-right: none; border-bottom: 1px solid var(--border); }
+  .verdict-cell:last-child { border-bottom: none; }
+  .verdict-cell:nth-child(2),
+  .verdict-cell:nth-child(3),
+  .verdict-cell:nth-child(4) { border-top: none; }
+  .spec-grid { grid-template-columns: 1fr; }
+  .spec-cell { border-right: none; border-bottom: 1px solid var(--border); }
+  .spec-cell:last-child { border-bottom: none; }
+  .spec-cell:nth-child(3) { border-top: none; }
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print {
+  @page { margin: 14mm; }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 10pt;
+  }
+  body::before, body::after { display: none !important; }
+
+  .topbar, .strip, .toast-stack, .actions, .rail-wrap, .chart-section,
+  .kbd, .ghost-btn, .j-del, .palette-overlay { display: none !important; }
+
+  .layout { display: block; padding: 0; max-width: none; }
+
+  .panel {
+    border: 1px solid #999 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    break-inside: avoid;
+    margin-bottom: 8mm;
+  }
+  .panel::before, .panel::after { display: none !important; }
+
+  .sidebar { position: static !important; }
+
+  .gauge-svg { color: #000 !important; max-width: 380px; }
+  .gauge-value { color: #000 !important; font-size: 40pt !important; }
+
+  .legend-swatch.lime { background: #fff !important; border: 1px solid #000; }
+  .legend-swatch.amber { background: #bbb !important; }
+  .legend-swatch.rose { background: #666 !important; }
+
+  .verdict, .spec-card, .journal-head, .j-row {
+    background: #fff !important;
+    border-color: #999 !important;
+  }
+  .verdict::before { background: #000 !important; }
+  .verdict.ok .verdict-stamp,
+  .verdict.near .verdict-stamp,
+  .verdict.critical .verdict-stamp,
+  .verdict-status,
+  .verdict-haccp { color: #000 !important; }
+  .verdict-haccp { border-color: #000 !important; }
+
+  .j-row, .j-ph, .j-time, .j-delta, .j-name { color: #000 !important; }
+  .j-dot i { background: #000 !important; }
+
+  .journal-body { max-height: none !important; overflow: visible !important; }
+  .session-summary b, .session-summary .ok, .session-summary .bad { color: #000 !important; }
+
+  .footer { border-top: 1px solid #999 !important; }
+  .footer-line, .footer-line a, .footer-line b { color: #000 !important; border: none !important; }
+
+  .picker-trigger, .ph-field, .step-btn {
+    background: #fff !important;
+    border-color: #999 !important;
+  }
+  .ph-field input { color: #000 !important; }
+}
+</style>
+</head>
+<body>
+<div class="app" id="appRoot" data-status="ready">
+
+<!-- ============================================================
+     TOPBAR
+     ============================================================ -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-glyph" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9.5 2.5h5"/>
+          <path d="M10.5 2.5v6.6L5.6 18.4A1.8 1.8 0 0 0 7.2 21h9.6a1.8 1.8 0 0 0 1.6-2.6L13.5 9.1V2.5"/>
+          <path d="M7.6 15.2h8.8"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-name">pH-CHECK PRO</div>
+        <div class="brand-sub">ACIDITY ANALYZER</div>
+      </div>
+      <span class="ver-tag">v1.0</span>
+    </div>
+
+    <div class="sys-chip" title="Системная платформа NEURAL_ARCHITECT_PREMIUM++">
+      <span class="led" aria-hidden="true"></span>
+      <span class="sys-text">NEURAL_ARCHITECT_PREMIUM++</span>
+    </div>
+
+    <div class="status-pill" id="statusPill" title="Статус прибора">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="status-text" id="statusLabel">ГОТОВ</span>
+    </div>
+
+    <div class="topbar-spacer"></div>
+
+    <div class="tools">
+      <button class="icon-btn" id="btnSearch" title="Поиск продукта (⌘K)" aria-label="Поиск продукта">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/>
+        </svg>
+      </button>
+      <button class="icon-btn" id="btnPrint" title="Печать" aria-label="Печать">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6.5 9V3h11v6"/>
+          <rect x="3" y="9" width="18" height="8" rx="1.5"/>
+          <path d="M6.5 14.5h11V21h-11z"/>
+        </svg>
+      </button>
+      <button class="icon-btn" id="btnTheme" title="Сменить тему" aria-label="Сменить тему">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
+        </svg>
+      </button>
+      <a class="author-chip" href="https://t.me/ASV_prod" target="_blank" rel="noopener noreferrer" title="Автор — Telegram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>
+        </svg>
+        ASV_PROD
+      </a>
+      <a class="icon-btn" href="https://smol0901-jpg.github.io/neural-architect-premium-pages/" target="_blank" rel="noopener noreferrer" title="System Hub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7.5" height="7.5" rx="1.2"/>
+          <rect x="13.5" y="3" width="7.5" height="7.5" rx="1.2"/>
+          <rect x="3" y="13.5" width="7.5" height="7.5" rx="1.2"/>
+          <rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.2"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     TOOLBAR STRIP
+     ============================================================ -->
+<div class="strip">
+  <div class="strip-inner">
+    <nav class="crumbs" aria-label="Навигация">
+      <span>ЛИНИЯ</span><span class="sep">/</span>
+      <span>ТЕРМООБРАБОТКА</span><span class="sep">/</span>
+      <span class="cur">СОУСОВЫЙ ЦЕХ</span>
+    </nav>
+    <div class="strip-spacer"></div>
+    <div class="telemetry">
+      <span class="tm"><span>SESSION</span><b id="tmSession">—</b></span>
+      <span class="tm"><span>ПОСЛ. ИЗМ.</span><b id="tmLast">—</b></span>
+      <span class="tm"><span>ЗА СМЕНУ</span><b id="tmCount">0</b></span>
+      <span class="tm"><span>КАЛИБР.</span><b id="tmCal">—</b></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     MAIN LAYOUT
+     ============================================================ -->
+<div class="layout">
+
+  <!-- ---------------- MAIN PANEL ---------------- -->
+  <main class="panel">
+    <div class="panel-head">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9.5 2.5h5"/>
+        <path d="M10.5 2.5v6.6L5.6 18.4A1.8 1.8 0 0 0 7.2 21h9.6a1.8 1.8 0 0 0 1.6-2.6L13.5 9.1V2.5"/>
+      </svg>
+      <span class="ph-title">Измерительный модуль · pH</span>
+      <span class="ph-right lbl">TITRA-1 · v1.0</span>
+    </div>
+
+    <div class="panel-body">
+
+      <!-- Product picker trigger -->
+      <button class="picker-trigger" id="pickerTrigger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 6h16M4 12h16M4 18h10"/>
+        </svg>
+        <span class="picker-trigger-label" id="pickerLabel">Выбрать продукт / сырьё…</span>
+        <span class="kbd">⌘K</span>
+      </button>
+
+      <!-- Spec card -->
+      <div class="spec-card" id="specCard">
+        <div class="spec-top">
+          <div class="spec-name" id="specName">—</div>
+          <div class="spec-cat" id="specCat">—</div>
+        </div>
+        <div class="spec-grid">
+          <div class="spec-cell">
+            <span class="k">Норма pH</span>
+            <span class="v lime" id="specNorm">—</span>
+          </div>
+          <div class="spec-cell">
+            <span class="k">Допуск</span>
+            <span class="v" id="specTol">±0,30</span>
+          </div>
+          <div class="spec-cell">
+            <span class="k">Документ</span>
+            <span class="v" id="specSrc">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Measurement -->
+      <div class="measure">
+        <div class="measure-row">
+          <button class="step-btn" id="stepDown" title="−0,01 pH" aria-label="Уменьшить на 0,01">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+              <path d="M5 12h14"/>
+            </svg>
+          </button>
+          <div class="ph-field">
+            <input type="text" id="phInput" inputmode="decimal" autocomplete="off"
+                   placeholder="—,—" aria-label="Измеренное значение pH">
+            <span class="unit">pH</span>
+          </div>
+          <button class="step-btn" id="stepUp" title="+0,01 pH" aria-label="Увеличить на 0,01">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="rail-wrap">
+          <div class="rail" id="rail" role="slider" aria-label="Шкала pH 0–14"
+               aria-valuemin="0" aria-valuemax="14" aria-valuenow="0" tabindex="0">
+            <div class="rail-track">
+              <div class="rail-amber-l" id="railAmberL" style="left:0;width:0"></div>
+              <div class="rail-norm" id="railNorm" style="left:0;width:0"></div>
+              <div class="rail-amber-r" id="railAmberR" style="left:0;width:0"></div>
+            </div>
+            <div class="rail-thumb is-empty" id="railThumb" style="left:9px"></div>
+          </div>
+          <div class="rail-scale">
+            <span>0</span><span>3,5</span><span>7</span><span>10,5</span><span>14</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gauge -->
+      <div class="gauge-wrap">
+        <svg class="gauge-svg" id="gaugeSvg" viewBox="0 0 480 290" role="img" aria-label="Аналоговый прибор pH">
+          <g id="gaugeScale"></g>
+          <g id="gaugeZones"></g>
+          <g class="gauge-needle is-empty" id="gaugeNeedle">
+            <polygon points="240,114 245,252 235,252" fill="currentColor"/>
+            <circle cx="240" cy="114" r="3.2" fill="currentColor"/>
+            <circle cx="240" cy="252" r="10" fill="var(--bg-2)" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="240" cy="252" r="2.5" fill="currentColor"/>
+          </g>
+        </svg>
+
+        <div class="gauge-readout">
+          <div class="gauge-value" id="gaugeValue">—</div>
+          <div class="gauge-unit">pH · измеренное значение</div>
+        </div>
+
+        <div class="gauge-legend">
+          <span class="legend-item"><i class="legend-swatch lime"></i>Норма</span>
+          <span class="legend-item"><i class="legend-swatch amber"></i>Пограничная зона</span>
+          <span class="legend-item"><i class="legend-swatch rose"></i>Критично</span>
+        </div>
+      </div>
+
+      <!-- Live chart -->
+      <div class="chart-section">
+        <div class="chart-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18"/>
+            <path d="M7 15l4-4 3 3 5-6"/>
+          </svg>
+          <span class="chart-title">Динамика измерений</span>
+          <span class="chart-meta" id="chartMeta">—</span>
+        </div>
+        <div class="chart-body">
+          <canvas id="chartCanvas" aria-label="График измерений pH"></canvas>
+          <div class="chart-empty visible" id="chartEmpty">
+            <b>НЕТ ДАННЫХ ДЛЯ ГРАФИКА</b>
+            <span>Зафиксируйте минимум 2 измерения</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verdict -->
+      <div class="verdict" id="verdictCard">
+        <div class="verdict-head">
+          <div class="verdict-stamp">
+            <span class="mark" id="verdictMark">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5"/>
+              </svg>
+            </span>
+            <span class="verdict-status" id="verdictStatus">—</span>
+          </div>
+          <div class="verdict-spacer"></div>
+          <span class="verdict-haccp" id="verdictHaccp">HACCP PASS</span>
+        </div>
+        <div class="verdict-grid">
+          <div class="verdict-cell">
+            <span class="k">Измерено</span>
+            <span class="v" id="verdictMeasured">—</span>
+          </div>
+          <div class="verdict-cell">
+            <span class="k">Допустимо</span>
+            <span class="v" id="verdictNorm">—</span>
+          </div>
+          <div class="verdict-cell">
+            <span class="k">Отклонение Δ</span>
+            <span class="v delta" id="verdictDelta">—</span>
+          </div>
+          <div class="verdict-cell">
+            <span class="k">Статус</span>
+            <span class="v" id="verdictStatusText">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="act-btn primary" id="btnRecord" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/>
+            <path d="M17 21v-8H7v8M7 3v5h8"/>
+          </svg>
+          <span class="full-label">Зафиксировать в журнал</span>
+          <span class="short-label">В журнал</span>
+        </button>
+        <button class="act-btn" id="btnCopyImage" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="9" cy="9" r="1.8"/>
+            <path d="m21 15-5-5L5 21"/>
+          </svg>
+          <span class="full-label">Копировать как изображение</span>
+          <span class="short-label">PNG</span>
+        </button>
+        <button class="act-btn" id="btnShareText" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/>
+            <path d="m8.4 13.4 7.2 4.2M15.6 6.4 8.4 10.6"/>
+          </svg>
+          <span class="full-label">Поделиться текстом</span>
+          <span class="short-label">Текст</span>
+        </button>
+        <button class="act-btn" id="btnCopyLink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/>
+            <path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>
+          </svg>
+          <span class="full-label">Скопировать ссылку</span>
+          <span class="short-label">Ссылка</span>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ---------------- SIDEBAR ---------------- -->
+  <aside class="sidebar">
+
+    <section class="panel">
+      <div class="panel-head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5l3.2 2"/>
+        </svg>
+        <span class="ph-title">Журнал измерений</span>
+        <span class="ph-right lbl" id="journalCount">0</span>
+      </div>
+
+      <div class="journal-head" aria-hidden="true">
+        <span>ВРЕМЯ</span>
+        <span>ПРОДУКТ</span>
+        <span>pH</span>
+        <span>ST</span>
+        <span>Δ</span>
+        <span></span>
+      </div>
+
+      <div class="journal-body" id="journalBody"></div>
+
+      <div class="journal-foot">
+        <div class="session-summary" id="sessionSummary">Сессия: 0 измерений</div>
+        <button class="ghost-btn" id="btnExportCsv" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>
+          </svg>
+          Экспорт журнала · CSV
+        </button>
+        <button class="ghost-btn danger" id="btnClearJournal" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18M8 6V4.5A1.5 1.5 0 0 1 9.5 3h5A1.5 1.5 0 0 1 16 4.5V6M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+          </svg>
+          Очистить журнал
+        </button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="6" width="20" height="12" rx="2"/>
+          <path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h12"/>
+        </svg>
+        <span class="ph-title">Управление</span>
+      </div>
+      <div class="kbd-help">
+        <div class="kbd-help-row"><span class="kk kbd">⌘K</span><span class="vv">палитра продуктов</span></div>
+        <div class="kbd-help-row"><span class="kk kbd">↵</span><span class="vv">зафиксировать в журнал</span></div>
+        <div class="kbd-help-row"><span class="kk kbd">ESC</span><span class="vv">очистить значение</span></div>
+        <div class="kbd-help-row"><span class="kk kbd">/</span><span class="vv">фокус поиска</span></div>
+        <div class="kbd-help-row"><span class="kk kbd">↑↓</span><span class="vv">навигация по списку</span></div>
+      </div>
+    </section>
+
+  </aside>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="footer-line">
+    <b>NEURAL_ARCHITECT_PREMIUM++</b>
+    <span class="sep">·</span>
+    <span>pH-CHECK PRO v1.0</span>
+    <span class="sep">·</span>
+    <span>build 2026.09.13</span>
+  </div>
+  <div class="footer-line">
+    <span>Compliance:</span>
+    <span>ТР ТС 021/2011</span>
+    <span class="sep">·</span>
+    <span>СанПиН 2.3/2.4.3590-21</span>
+    <span class="sep">·</span>
+    <span>HACCP Plan v1.0</span>
+  </div>
+  <div class="footer-line">
+    <span>Hub:</span>
+    <a href="https://smol0901-jpg.github.io/neural-architect-premium-pages/" target="_blank" rel="noopener noreferrer">neural-architect-premium-pages</a>
+    <span class="sep">·</span>
+    <span>Author:</span>
+    <a href="https://t.me/ASV_prod" target="_blank" rel="noopener noreferrer">ASV_PROD · Telegram</a>
+  </div>
+</footer>
+
+</div><!-- /.app -->
+
+<!-- ============================================================
+     COMMAND PALETTE
+     ============================================================ -->
+<div class="palette-overlay" id="paletteOverlay" role="dialog" aria-modal="true" aria-label="Выбор продукта">
+  <div class="palette">
+    <div class="palette-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/>
+      </svg>
+      <input type="text" id="paletteInput" placeholder="Поиск продукта, категории, документа…" autocomplete="off" spellcheck="false">
+      <span class="kbd">ESC</span>
+    </div>
+    <div class="palette-list" id="paletteList"></div>
+    <div class="palette-foot">
+      <span><span class="kbd">↑↓</span> навигация</span>
+      <span><span class="kbd">↵</span> выбрать</span>
+      <span><span class="kbd">ESC</span> закрыть</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     TOASTS
+     ============================================================ -->
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ==========================================================
+     CONSTANTS
+     ========================================================== */
+  const PRODUCTS = [
+    { id: 'melanzh',     name: 'Меланж',                       min: 7.00, max: 7.50, category: 'Сырьё',             source: 'План ХАССП' },
+    { id: 'moloko',      name: 'Молоко',                       min: 6.60, max: 6.80, category: 'Сырьё',             source: 'План ХАССП' },
+    { id: 'osnova',      name: 'Основа для соуса',             min: 6.70, max: 7.05, category: 'П/Ф',               source: 'План ХАССП' },
+    { id: 'smetana',     name: 'Сметана',                      min: 4.00, max: 4.50, category: 'Сырьё',             source: 'План ХАССП' },
+    { id: 'ketchup',     name: 'Кетчуп',                       min: 3.70, max: 4.40, category: 'Сырьё',             source: 'План ХАССП' },
+    { id: 'tomat_pasta', name: 'Томатная паста',               min: 4.00, max: 4.40, category: 'Сырьё',             source: 'План ХАССП' },
+    { id: 'sauce_firm',  name: 'Соус Фирменный (готовый)',     min: 4.00, max: 4.50, category: 'Готовая продукция', source: 'ТТК f1' },
+    { id: 'sauce_red',   name: 'Соус Красный (готовый)',       min: 3.80, max: 4.20, category: 'Готовая продукция', source: 'ТТК f2' },
+    { id: 'sauce_bbq',   name: 'Соусы Барбекю (готовые)',      min: 3.80, max: 4.20, category: 'Готовая продукция', source: 'ТТК sauce_01-04' },
+    { id: 'sauce_sub',   name: 'Суб-соус Барбекю Оригинал',    min: 3.80, max: 4.20, category: 'Готовая продукция', source: 'ТТК sauce_05' },
+    { id: 'myaso_pticy', name: 'Мясо птицы жареное',           min: 5.80, max: 6.40, category: 'Готовая продукция', source: 'План ХАССП' },
+    { id: 'lavash',      name: 'Лаваш / Пита',                 min: 5.00, max: 6.00, category: 'Готовая продукция', source: 'План ХАССП' },
+    { id: 'poverhnosti', name: 'Поверхности после мойки',      min: 6.50, max: 7.50, category: 'Контроль цехов',    source: 'ДП 029-2023' },
+    { id: 'pf_osnova',   name: 'П/Ф Основа для соуса',         min: 6.70, max: 7.05, category: 'П/Ф',               source: 'ТТК f3' },
+    { id: 'pf_marinad',  name: 'П/Ф Маринад',                  min: 3.80, max: 4.50, category: 'П/Ф',               source: 'ТТК pf_02-04' },
+    { id: 'pf_glazur',   name: 'Глазурь для мяса',             min: 3.80, max: 4.20, category: 'П/Ф',               source: 'ТТК ai_1784965004584' }
+  ];
+
+  const NEAR_EDGE = 0.3;
+
+  const KEY_HISTORY = 'phcheck-history';
+  const KEY_THEME   = 'phcheck-theme';
+  const KEY_SESSION = 'phcheck-session';
+  const KEY_CAL     = 'phcheck-calibration';
+
+  const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ==========================================================
+     HELPERS
+     ========================================================== */
+  const $  = (sel, root) => (root || document).querySelector(sel);
+  const $$ = (sel, root) => Array.prototype.slice.call((root || document).querySelectorAll(sel));
+
+  const fmt = (v, d) => {
+    if (v === null || v === undefined || isNaN(v)) return '—';
+    return Number(v).toFixed(d === undefined ? 2 : d).replace('.', ',');
+  };
+  const parseNum = (s) => {
+    if (s === null || s === undefined) return null;
+    const cleaned = String(s).trim().replace(/\s+/g, '').replace(',', '.');
+    if (cleaned === '' || cleaned === '-' || cleaned === '.') return null;
+    const n = parseFloat(cleaned);
+    return isNaN(n) ? null : n;
+  };
+  const pad2 = (n) => (n < 10 ? '0' : '') + n;
+  const timeShort = (ts) => { const d = new Date(ts); return pad2(d.getHours()) + ':' + pad2(d.getMinutes()); };
+  const dateShort = (ts) => { const d = new Date(ts); return pad2(d.getDate()) + '.' + pad2(d.getMonth() + 1); };
+  const dateFull  = (ts) => { const d = new Date(ts); return pad2(d.getDate()) + '.' + pad2(d.getMonth() + 1) + '.' + d.getFullYear(); };
+  const stampNow  = () => { const d = new Date(); return pad2(d.getHours()) + ':' + pad2(d.getMinutes()) + ':' + pad2(d.getSeconds()); };
+
+  const store = {
+    get(key, fallback) { try { const v = localStorage.getItem(key); return v === null ? fallback : v; } catch (e) { return fallback; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch (e) {} },
+    getJSON(key, fallback) { try { const v = localStorage.getItem(key); if (!v) return fallback; return JSON.parse(v); } catch (e) { return fallback; } },
+    setJSON(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {} }
+  };
+
+  /* ==========================================================
+     STATE
+     ========================================================== */
+  const state = {
+    product: null,
+    value: null,
+    history: [],
+    status: 'ready',
+    measuringTimer: null
+  };
+
+  /* ==========================================================
+     SESSION & CALIBRATION
+     ========================================================== */
+  function initSession() {
+    let sid = store.get(KEY_SESSION, '');
+    if (!sid) {
+      const d = new Date();
+      const ymd = String(d.getFullYear()).slice(2) + pad2(d.getMonth() + 1) + pad2(d.getDate());
+      const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
+      sid = 'SES-' + ymd + '-' + rand;
+      store.set(KEY_SESSION, sid);
+    }
+    return sid;
+  }
+  function initCalibration() {
+    let cal = store.get(KEY_CAL, '');
+    if (!cal) {
+      const d = new Date();
+      d.setDate(d.getDate() - 12);
+      cal = String(d.getTime());
+      store.set(KEY_CAL, cal);
+    }
+    return parseInt(cal, 10);
+  }
+  const sessionId = initSession();
+  const calibrationTs = initCalibration();
+
+  /* ==========================================================
+     VERDICT LOGIC (adaptive edge for narrow ranges)
+     ========================================================== */
+  function getEdge(min, max) {
+    const range = max - min;
+    // Adaptive tolerance: full NEAR_EDGE for wide ranges,
+    // scaled down for narrow ones so "ok" zone always exists.
+    return Math.min(NEAR_EDGE, Math.max(range * 0.5, 0.02));
+  }
+
+  function computeVerdict(value, product) {
+    if (value === null || !product) return null;
+
+    const min = product.min;
+    const max = product.max;
+    const edge = getEdge(min, max);
+
+    let level, statusText, delta, pass;
+
+    if (value >= min && value <= max) {
+      level = 'ok';
+      statusText = 'В НОРМЕ';
+      delta = 0;
+      pass = true;
+    } else if (value < min) {
+      delta = min - value;
+      if (value >= min - edge) {
+        level = 'near';
+        statusText = 'НИЖЕ НОРМЫ';
+      } else {
+        level = 'critical';
+        statusText = 'НИЖЕ НОРМЫ';
+      }
+      pass = false;
+    } else {
+      delta = value - max;
+      if (value <= max + edge) {
+        level = 'near';
+        statusText = 'ВЫШЕ НОРМЫ';
+      } else {
+        level = 'critical';
+        statusText = 'ВЫШЕ НОРМЫ';
+      }
+      pass = false;
+    }
+
+    return { level, statusText, delta, pass, edge };
+  }
+
+  /* ==========================================================
+     SYSTEM STATUS
+     ========================================================== */
+  const STATUS_LABELS = {
+    ready: 'ГОТОВ',
+    measuring: 'ИЗМЕРЕНИЕ',
+    calibration: 'КАЛИБРОВКА',
+    fault: 'ОШИБКА'
+  };
+
+  function setStatus(s) {
+    state.status = s;
+    const root = $('#appRoot');
+    if (root) root.setAttribute('data-status', s);
+    const lbl = $('#statusLabel');
+    if (lbl) lbl.textContent = STATUS_LABELS[s] || s;
+  }
+
+  function pulseMeasuring() {
+    setStatus('measuring');
+    if (state.measuringTimer) clearTimeout(state.measuringTimer);
+    state.measuringTimer = setTimeout(() => {
+      if (state.status === 'measuring') setStatus('ready');
+    }, 1400);
+  }
+
+  /* ==========================================================
+     THEME
+     ========================================================== */
+  const THEME_ICON_MOON = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>';
+  const THEME_ICON_SUN  = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const icon = $('#themeIcon');
+    if (icon) icon.innerHTML = theme === 'dark' ? THEME_ICON_MOON : THEME_ICON_SUN;
+    store.set(KEY_THEME, theme);
+    // redraw chart with new colors
+    if (typeof drawChart === 'function') drawChart();
+  }
+
+  function initTheme() {
+    let saved = store.get(KEY_THEME, '');
+    if (!saved) {
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      saved = prefersLight ? 'light' : 'dark';
+    }
+    applyTheme(saved);
+  }
+
+  $('#btnTheme').addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
+  });
+
+  $('#btnPrint').addEventListener('click', () => window.print());
+
+  /* ==========================================================
+     TOASTS
+     ========================================================== */
+  function toast(msg, type) {
+    const stack = $('#toastStack');
+    const el = document.createElement('div');
+    el.className = 'toast' + (type ? ' ' + type : '');
+    el.innerHTML = '<span class="ts">' + stampNow() + '</span><span class="msg"></span>';
+    el.querySelector('.msg').textContent = msg;
+    stack.appendChild(el);
+    requestAnimationFrame(() => el.classList.add('show'));
+    setTimeout(() => {
+      el.classList.remove('show');
+      setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 220);
+    }, 2400);
+  }
+
+  /* ==========================================================
+     GAUGE GEOMETRY
+     ========================================================== */
+  const G = {
+    CX: 240,
+    CY: 252,
+    R_TICK_OUT: 168,
+    R_MICRO: 163,
+    R_MEDIUM: 159,
+    R_MAJOR: 152,
+    R_LABEL: 182,
+    R_CALLOUT: 202,
+    R_BAND: 126,
+    W_BAND: 24
+  };
+
+  const angleFor = (v) => Math.PI - (v / 14) * Math.PI;
+
+  function polar(angle, r) {
+    return { x: G.CX + r * Math.cos(angle), y: G.CY - r * Math.sin(angle) };
+  }
+
+  function arcPath(a1, a2, r) {
+    if (Math.abs(a1 - a2) < 1e-9) return '';
+    const p1 = polar(a1, r);
+    const p2 = polar(a2, r);
+    const large = Math.abs(a1 - a2) > Math.PI ? 1 : 0;
+    const sweep = a1 > a2 ? 1 : 0;
+    return 'M ' + p1.x.toFixed(2) + ' ' + p1.y.toFixed(2) +
+           ' A ' + r + ' ' + r + ' 0 ' + large + ' ' + sweep +
+           ' ' + p2.x.toFixed(2) + ' ' + p2.y.toFixed(2);
+  }
+
+  /* ---- static scale ---- */
+  function buildScale() {
+    let s = '';
+
+    s += '<path d="' + arcPath(Math.PI, 0, G.R_BAND) + '" fill="none" stroke="currentColor" ' +
+         'stroke-width="' + G.W_BAND + '" opacity="0.09" stroke-linecap="butt"/>';
+
+    for (let i = 0; i <= 140; i++) {
+      const v = i / 10;
+      const a = angleFor(v);
+      const isMajor = (v === 0 || v === 3.5 || v === 7 || v === 10.5 || v === 14);
+      const isHalf = Math.abs(v * 2 - Math.round(v * 2)) < 1e-6;
+
+      let r1, w, op;
+      if (isMajor) { r1 = G.R_MAJOR; w = 1.6; op = 0.85; }
+      else if (isHalf) { r1 = G.R_MEDIUM; w = 1.1; op = 0.42; }
+      else { r1 = G.R_MICRO; w = 1; op = 0.20; }
+
+      const p1 = polar(a, r1);
+      const p2 = polar(a, G.R_TICK_OUT);
+      s += '<line x1="' + p1.x.toFixed(2) + '" y1="' + p1.y.toFixed(2) + '" ' +
+           'x2="' + p2.x.toFixed(2) + '" y2="' + p2.y.toFixed(2) + '" ' +
+           'stroke="currentColor" stroke-width="' + w + '" opacity="' + op + '"/>';
+    }
+
+    [0, 3.5, 7, 10.5, 14].forEach(function (v) {
+      const a = angleFor(v);
+      const p = polar(a, G.R_LABEL);
+      s += '<text x="' + p.x.toFixed(1) + '" y="' + (p.y + 3.6).toFixed(1) + '" ' +
+           'text-anchor="middle" font-family="JetBrains Mono, monospace" ' +
+           'font-size="10.5" font-weight="500" fill="currentColor" opacity="0.5">' +
+           String(v).replace('.', ',') + '</text>';
+    });
+
+    return s;
+  }
+
+  /* ---- dynamic zones ---- */
+  function band(v1, v2, color, opacity) {
+    if (v2 - v1 < 0.0005) return '';
+    const a1 = angleFor(v1);
+    const a2 = angleFor(v2);
+    return '<path d="' + arcPath(a1, a2, G.R_BAND) + '" fill="none" stroke="' + color + '" ' +
+           'stroke-width="' + G.W_BAND + '" opacity="' + opacity + '" stroke-linecap="butt"/>';
+  }
+
+  function buildZones(product) {
+    if (!product) return '';
+
+    const min = product.min;
+    const max = product.max;
+    const edge = getEdge(min, max);
+    const outerLow = Math.max(0, min - edge);
+    const outerHigh = Math.min(14, max + edge);
+
+    let s = '';
+
+    // out-of-norm (rose)
+    if (outerLow > 0.001) s += band(0, outerLow, 'var(--rose)', 0.24);
+    if (outerHigh < 13.999) s += band(outerHigh, 14, 'var(--rose)', 0.24);
+
+    // tolerance edges (amber)
+    if (min - outerLow > 0.0005) s += band(outerLow, min, 'var(--amber)', 0.85);
+    if (outerHigh - max > 0.0005) s += band(max, outerHigh, 'var(--amber)', 0.85);
+
+    // norm (lime) — full [min, max]
+    if (max - min > 0.0005) s += band(min, max, 'var(--lime)', 0.9);
+
+    // boundary ticks + callouts for min/max
+    [min, max].forEach(function (v) {
+      const a = angleFor(v);
+
+      const t1 = polar(a, G.R_BAND - G.W_BAND / 2 - 1);
+      const t2 = polar(a, G.R_BAND + G.W_BAND / 2 + 1);
+      s += '<line x1="' + t1.x.toFixed(2) + '" y1="' + t1.y.toFixed(2) + '" ' +
+           'x2="' + t2.x.toFixed(2) + '" y2="' + t2.y.toFixed(2) + '" ' +
+           'stroke="var(--bg-1)" stroke-width="1.8" opacity="0.9"/>';
+
+      const c1 = polar(a, G.R_BAND + G.W_BAND / 2 + 3);
+      const c2 = polar(a, G.R_CALLOUT - 9);
+      s += '<line x1="' + c1.x.toFixed(2) + '" y1="' + c1.y.toFixed(2) + '" ' +
+           'x2="' + c2.x.toFixed(2) + '" y2="' + c2.y.toFixed(2) + '" ' +
+           'stroke="currentColor" stroke-width="1" opacity="0.42"/>';
+
+      const pl = polar(a, G.R_CALLOUT);
+      s += '<text x="' + pl.x.toFixed(1) + '" y="' + (pl.y + 3.8).toFixed(1) + '" ' +
+           'text-anchor="middle" font-family="JetBrains Mono, monospace" ' +
+           'font-size="11" font-weight="600" fill="currentColor" opacity="0.92">' +
+           fmt(v) + '</text>';
+    });
+
+    return s;
+  }
+
+  /* ==========================================================
+     GAUGE RENDER
+     ========================================================== */
+  const gaugeScaleEl  = $('#gaugeScale');
+  const gaugeZonesEl  = $('#gaugeZones');
+  const gaugeNeedleEl = $('#gaugeNeedle');
+  const gaugeValueEl  = $('#gaugeValue');
+
+  gaugeScaleEl.innerHTML = buildScale();
+
+  function updateGaugeZones() {
+    gaugeZonesEl.innerHTML = buildZones(state.product);
+  }
+
+  function updateNeedle(value) {
+    if (value === null || isNaN(value)) {
+      gaugeNeedleEl.classList.add('is-empty');
+      return;
+    }
+    gaugeNeedleEl.classList.remove('is-empty');
+    // FIXED: correct rotation direction
+    // value 0 → -90° (left), value 7 → 0° (up), value 14 → +90° (right)
+    const deg = (value - 7) * (180 / 14);
+    gaugeNeedleEl.style.transform = 'rotate(' + deg.toFixed(3) + 'deg)';
+  }
+
+  /* ==========================================================
+     READOUT ANIMATION
+     ========================================================== */
+  let lastDisplayedValue = null;
+  let rafId = null;
+
+  function fmtReadout(v) {
+    if (v === null || isNaN(v)) return '—';
+    return fmt(v);
+  }
+
+  function setReadoutInstant(v) {
+    lastDisplayedValue = v;
+    gaugeValueEl.textContent = fmtReadout(v);
+  }
+
+  function animateReadout(from, to) {
+    if (REDUCE_MOTION || from === null || to === null || from === to) {
+      setReadoutInstant(to);
+      return;
+    }
+    if (rafId) cancelAnimationFrame(rafId);
+    const start = performance.now();
+    const dur = 280;
+    function step(t) {
+      const p = Math.min(1, (t - start) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      const v = from + (to - from) * e;
+      gaugeValueEl.textContent = fmtReadout(v);
+      if (p < 1) rafId = requestAnimationFrame(step);
+      else { rafId = null; gaugeValueEl.textContent = fmtReadout(to); }
+    }
+    rafId = requestAnimationFrame(step);
+  }
+
+  /* ==========================================================
+     RAIL
+     ========================================================== */
+  const railEl       = $('#rail');
+  const railThumbEl  = $('#railThumb');
+  const railNormEl   = $('#railNorm');
+  const railAmberLEl = $('#railAmberL');
+  const railAmberREl = $('#railAmberR');
+
+  function railPct(v) { return Math.max(0, Math.min(1, v / 14)); }
+
+  function updateRail() {
+    const w = railEl.clientWidth - 18;
+    if (w <= 0) return;
+
+    if (state.product) {
+      const p = state.product;
+      const edge = getEdge(p.min, p.max);
+      const outerLow = Math.max(0, p.min - edge);
+      const outerHigh = Math.min(14, p.max + edge);
+
+      const lNorm = railPct(p.min) * w;
+      const wNorm = (railPct(p.max) - railPct(p.min)) * w;
+      railNormEl.style.left = lNorm + 'px';
+      railNormEl.style.width = wNorm + 'px';
+      railNormEl.style.display = wNorm > 0.5 ? '' : 'none';
+
+      const lA1 = railPct(outerLow) * w;
+      const wA1 = (railPct(p.min) - railPct(outerLow)) * w;
+      railAmberLEl.style.left = lA1 + 'px';
+      railAmberLEl.style.width = wA1 + 'px';
+      railAmberLEl.style.display = wA1 > 0.5 ? '' : 'none';
+
+      const lA2 = railPct(p.max) * w;
+      const wA2 = (railPct(outerHigh) - railPct(p.max)) * w;
+      railAmberREl.style.left = lA2 + 'px';
+      railAmberREl.style.width = wA2 + 'px';
+      railAmberREl.style.display = wA2 > 0.5 ? '' : 'none';
+    } else {
+      railNormEl.style.display = 'none';
+      railAmberLEl.style.display = 'none';
+      railAmberREl.style.display = 'none';
+    }
+
+    if (state.value === null) {
+      railThumbEl.classList.add('is-empty');
+      railThumbEl.style.left = '9px';
+    } else {
+      railThumbEl.classList.remove('is-empty');
+      railThumbEl.style.left = (9 + railPct(state.value) * w) + 'px';
+    }
+
+    railEl.setAttribute('aria-valuenow', state.value === null ? '0' : state.value.toFixed(2));
+    railEl.setAttribute('aria-valuetext', state.value === null ? 'не задано' : fmt(state.value));
+  }
+
+  function railValueFromEvent(clientX) {
+    const rect = railEl.getBoundingClientRect();
+    const pad = 9;
+    const w = rect.width - pad * 2;
+    const x = Math.max(0, Math.min(w, clientX - rect.left - pad));
+    const v = (x / w) * 14;
+    return Math.max(0, Math.min(14, Math.round(v * 100) / 100));
+  }
+
+  let railDrag = false;
+  railEl.addEventListener('pointerdown', function (e) {
+    railDrag = true;
+    try { railEl.setPointerCapture(e.pointerId); } catch (err) {}
+    setValue(railValueFromEvent(e.clientX), true);
+    e.preventDefault();
+  });
+  railEl.addEventListener('pointermove', function (e) {
+    if (!railDrag) return;
+    setValue(railValueFromEvent(e.clientX), true);
+  });
+  railEl.addEventListener('pointerup', function (e) {
+    railDrag = false;
+    try { railEl.releasePointerCapture(e.pointerId); } catch (err) {}
+  });
+  railEl.addEventListener('pointercancel', function () { railDrag = false; });
+
+  railEl.addEventListener('keydown', function (e) {
+    const cur = state.value === null ? 7 : state.value;
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      e.preventDefault(); setValue(Math.max(0, Math.round((cur - 0.1) * 100) / 100), true);
+    } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      e.preventDefault(); setValue(Math.min(14, Math.round((cur + 0.1) * 100) / 100), true);
+    } else if (e.key === 'Home') { e.preventDefault(); setValue(0, true); }
+    else if (e.key === 'End') { e.preventDefault(); setValue(14, true); }
+  });
+
+  /* ==========================================================
+     pH INPUT
+     ========================================================== */
+  const phInputEl = $('#phInput');
+
+  phInputEl.addEventListener('input', function () {
+    const raw = phInputEl.value.trim();
+    if (raw === '') { state.value = null; updateAll(); return; }
+    const v = parseNum(raw);
+    if (v === null) return;
+    if (v < 0 || v > 14) return;
+    state.value = v;
+    updateAll(true);
+  });
+  phInputEl.addEventListener('blur', function () {
+    if (state.value !== null) phInputEl.value = fmt(state.value);
+  });
+  phInputEl.addEventListener('focus', function () { pulseMeasuring(); });
+
+  /* ==========================================================
+     STEPPERS
+     ========================================================== */
+  function step(delta) {
+    let cur = state.value;
+    if (cur === null) cur = 7;
+    const next = Math.max(0, Math.min(14, Math.round((cur + delta) * 100) / 100));
+    setValue(next, true);
+  }
+  $('#stepDown').addEventListener('click', function () { step(-0.01); });
+  $('#stepUp').addEventListener('click', function () { step(0.01); });
+
+  /* ==========================================================
+     SET VALUE
+     ========================================================== */
+  function setValue(v, fromUser) {
+    const prev = state.value;
+    state.value = v;
+    if (v !== null) phInputEl.value = fmt(v);
+    else phInputEl.value = '';
+    updateAll(false, prev);
+    if (fromUser) pulseMeasuring();
+  }
+
+  /* ==========================================================
+     UPDATE ALL
+     ========================================================== */
+  function updateAll(skipInputSync, prevValue) {
+    const v = state.value;
+    updateNeedle(v);
+
+    const prev = (prevValue !== undefined ? prevValue : lastDisplayedValue);
+    if (v === null) setReadoutInstant(null);
+    else if (prev === null || prev === undefined) setReadoutInstant(v);
+    else animateReadout(prev, v);
+
+    updateRail();
+
+    const verdict = computeVerdict(v, state.product);
+
+    if (!verdict) {
+      gaugeValueEl.className = 'gauge-value';
+      $('#verdictCard').classList.remove('visible', 'ok', 'near', 'critical');
+      $('#btnRecord').disabled = true;
+      $('#btnCopyImage').disabled = true;
+      $('#btnShareText').disabled = true;
+      return;
+    }
+
+    gaugeValueEl.className = 'gauge-value ' + verdict.level;
+
+    const vc = $('#verdictCard');
+    vc.classList.add('visible');
+    vc.classList.remove('ok', 'near', 'critical');
+    vc.classList.add(verdict.level);
+
+    $('#verdictStatus').textContent = verdict.statusText;
+    $('#verdictMeasured').textContent = fmt(v) + ' pH';
+    $('#verdictNorm').textContent = fmt(state.product.min) + ' – ' + fmt(state.product.max);
+    $('#verdictDelta').textContent = verdict.delta > 0 ? 'Δ ' + fmt(verdict.delta) : 'Δ 0,00';
+    $('#verdictStatusText').textContent = verdict.statusText;
+
+    const haccp = $('#verdictHaccp');
+    haccp.textContent = verdict.pass ? 'HACCP PASS' : 'HACCP FAIL';
+
+    const mark = $('#verdictMark');
+    if (verdict.pass) {
+      mark.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+    } else {
+      mark.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8.5v5M12 17h.01"/><path d="M10.3 3.9 2.2 17.8A2 2 0 0 0 3.9 20.8h16.2a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>';
+    }
+
+    $('#btnRecord').disabled = false;
+    $('#btnCopyImage').disabled = false;
+    $('#btnShareText').disabled = false;
+  }
+
+  /* ==========================================================
+     PRODUCT SELECTION
+     ========================================================== */
+  function selectProduct(product, opts) {
+    state.product = product;
+    const lbl = $('#pickerLabel');
+    if (lbl) {
+      lbl.textContent = product.name;
+      lbl.classList.add('has-value');
+    }
+
+    $('#specName').textContent = product.name;
+    $('#specCat').textContent = product.category;
+    $('#specNorm').textContent = fmt(product.min) + ' – ' + fmt(product.max) + ' pH';
+    const edge = getEdge(product.min, product.max);
+    $('#specTol').textContent = '±' + fmt(edge);
+    $('#specSrc').textContent = product.source;
+    $('#specCard').classList.add('visible');
+
+    updateGaugeZones();
+    updateAll(true);
+    drawChart();
+
+    if (!opts || !opts.silent) {
+      toast('Продукт: ' + product.name);
+    }
+  }
+
+  /* ==========================================================
+     COMMAND PALETTE
+     ========================================================== */
+  const paletteOverlay = $('#paletteOverlay');
+  const paletteInput   = $('#paletteInput');
+  const paletteList    = $('#paletteList');
+
+  let paletteItems = [];
+  let paletteIndex = 0;
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function renderPalette(query) {
+    const q = (query || '').trim().toLowerCase();
+    const filtered = PRODUCTS.filter(function (p) {
+      if (!q) return true;
+      return p.name.toLowerCase().indexOf(q) !== -1 ||
+             p.category.toLowerCase().indexOf(q) !== -1 ||
+             p.id.toLowerCase().indexOf(q) !== -1 ||
+             p.source.toLowerCase().indexOf(q) !== -1;
+    });
+
+    paletteItems = filtered;
+    paletteIndex = 0;
+
+    if (filtered.length === 0) {
+      paletteList.innerHTML = '<div class="pal-empty">Нет совпадений</div>';
+      return;
+    }
+
+    paletteList.innerHTML = filtered.map(function (p, i) {
+      return '<button class="pal-item' + (i === 0 ? ' active' : '') + '" data-id="' + p.id + '" data-index="' + i + '">' +
+        '<div class="pal-item-main">' +
+          '<div class="pal-item-name">' + escapeHtml(p.name) + '</div>' +
+          '<div class="pal-item-meta">' +
+            '<span class="chip">' + escapeHtml(p.category) + '</span>' +
+            '<span class="src">' + escapeHtml(p.source) + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="pal-item-norm">' + fmt(p.min) + ' – ' + fmt(p.max) + '</div>' +
+      '</button>';
+    }).join('');
+
+    paletteList.scrollTop = 0;
+  }
+
+  function setPaletteIndex(i) {
+    const items = $$('.pal-item', paletteList);
+    if (items.length === 0) return;
+    if (i < 0) i = items.length - 1;
+    if (i >= items.length) i = 0;
+    paletteIndex = i;
+    items.forEach(function (el, idx) { el.classList.toggle('active', idx === i); });
+    const active = items[i];
+    if (active && active.scrollIntoView) active.scrollIntoView({ block: 'nearest' });
+  }
+
+  function openPalette() {
+    paletteOverlay.classList.add('open');
+    paletteInput.value = '';
+    renderPalette('');
+    setTimeout(function () { paletteInput.focus(); }, 10);
+  }
+  function closePalette() {
+    paletteOverlay.classList.remove('open');
+    paletteInput.blur();
+  }
+
+  paletteInput.addEventListener('input', function () { renderPalette(paletteInput.value); });
+  paletteInput.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); setPaletteIndex(paletteIndex + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setPaletteIndex(paletteIndex - 1); }
+    else if (e.key === 'Enter') {
+      e.preventDefault();
+      const p = paletteItems[paletteIndex];
+      if (p) { selectProduct(p); closePalette(); }
+    } else if (e.key === 'Escape') { e.preventDefault(); closePalette(); }
+  });
+
+  paletteList.addEventListener('click', function (e) {
+    const item = e.target.closest('.pal-item');
+    if (!item) return;
+    const id = item.getAttribute('data-id');
+    const p = PRODUCTS.filter(function (x) { return x.id === id; })[0];
+    if (p) { selectProduct(p); closePalette(); }
+  });
+  paletteList.addEventListener('mousemove', function (e) {
+    const item = e.target.closest('.pal-item');
+    if (!item) return;
+    const idx = parseInt(item.getAttribute('data-index'), 10);
+    if (!isNaN(idx) && idx !== paletteIndex) setPaletteIndex(idx);
+  });
+  paletteOverlay.addEventListener('click', function (e) {
+    if (e.target === paletteOverlay) closePalette();
+  });
+
+  $('#pickerTrigger').addEventListener('click', openPalette);
+  $('#btnSearch').addEventListener('click', openPalette);
+
+  /* ==========================================================
+     RECORD
+     ========================================================== */
+  function recordCurrent() {
+    const v = state.value;
+    const p = state.product;
+    if (v === null || !p) return;
+    const verdict = computeVerdict(v, p);
+    if (!verdict) return;
+
+    const entry = {
+      id: 'm_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+      ts: Date.now(),
+      productId: p.id,
+      productName: p.name,
+      category: p.category,
+      min: p.min,
+      max: p.max,
+      value: v,
+      level: verdict.level,
+      status: verdict.statusText,
+      delta: verdict.delta
+    };
+
+    state.history.unshift(entry);
+    if (state.history.length > 200) state.history.length = 200;
+    saveHistory();
+    renderJournal();
+    renderTelemetry();
+    drawChart();
+    toast('Зафиксировано: ' + p.name + ' · ' + fmt(v) + ' pH');
+  }
+  $('#btnRecord').addEventListener('click', recordCurrent);
+
+  /* ==========================================================
+     HISTORY
+     ========================================================== */
+  function loadHistory() {
+    const arr = store.getJSON(KEY_HISTORY, []);
+    state.history = Array.isArray(arr) ? arr.map(recomputeEntry) : [];
+  }
+
+  function recomputeEntry(e) {
+    if (typeof e.min !== 'number' || typeof e.max !== 'number') return e;
+    const v = computeVerdict(e.value, { min: e.min, max: e.max });
+    if (v) {
+      e.level = v.level;
+      e.status = v.statusText;
+      e.delta = v.delta;
+    }
+    return e;
+  }
+
+  function saveHistory() { store.setJSON(KEY_HISTORY, state.history); }
+
+  /* ==========================================================
+     RENDER JOURNAL
+     ========================================================== */
+  const journalBodyEl = $('#journalBody');
+  const sessionSummaryEl = $('#sessionSummary');
+
+  function renderJournal() {
+    const h = state.history;
+    $('#journalCount').textContent = h.length;
+    $('#btnExportCsv').disabled = h.length === 0;
+    $('#btnClearJournal').disabled = h.length === 0;
+
+    if (h.length === 0) {
+      journalBodyEl.innerHTML =
+        '<div class="journal-empty">' +
+          emptyIllustration() +
+          '<div class="t1">ЖУРНАЛ ПУСТ</div>' +
+          '<div class="t2">Зафиксируйте первое измерение — запись появится здесь и сохранится в браузере.</div>' +
+        '</div>';
+      renderSessionSummary();
+      return;
+    }
+
+    journalBodyEl.innerHTML = h.map(function (e, i) {
+      const cls = e.level;
+      return '<div class="j-row" data-index="' + i + '">' +
+        '<div class="j-time">' + dateShort(e.ts) + ' ' + timeShort(e.ts) + '</div>' +
+        '<div class="j-name" title="' + escapeHtml(e.productName) + '">' + escapeHtml(e.productName) + '</div>' +
+        '<div class="j-ph ' + cls + '">' + fmt(e.value) + '</div>' +
+        '<div class="j-dot"><i class="' + cls + '"></i></div>' +
+        '<div class="j-delta">' + (e.delta > 0 ? 'Δ ' + fmt(e.delta) : '—') + '</div>' +
+        '<button class="j-del" data-del="' + i + '" title="Удалить запись" aria-label="Удалить запись">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+            '<path d="M18 6 6 18M6 6l12 12"/>' +
+          '</svg>' +
+        '</button>' +
+      '</div>';
+    }).join('');
+
+    renderSessionSummary();
+  }
+
+  function renderSessionSummary() {
+    const h = state.history;
+    if (h.length === 0) { sessionSummaryEl.innerHTML = 'Сессия: 0 измерений'; return; }
+    const ok = h.filter(function (e) { return e.level === 'ok'; }).length;
+    const bad = h.length - ok;
+    sessionSummaryEl.innerHTML =
+      'Сессия: <b>' + h.length + '</b> измерений · ' +
+      'в норме <b class="ok">' + ok + '</b> · ' +
+      'вне нормы <b class="bad">' + bad + '</b>';
+  }
+
+  function emptyIllustration() {
+    return '' +
+      '<svg viewBox="0 0 200 130" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M10 10h180v110H10z" opacity="0.18"/>' +
+        '<path d="M10 40h180M10 70h180M10 100h180" opacity="0.10"/>' +
+        '<path d="M50 10v110M90 10v110M130 10v110M170 10v110" opacity="0.10"/>' +
+        '<path d="M22 108 C 60 108, 74 104, 84 78 C 94 52, 100 44, 116 40 C 140 34, 160 30, 178 26" opacity="0.75"/>' +
+        '<path d="M22 20v88h156" opacity="0.55"/>' +
+        '<circle cx="90" cy="66" r="2.4" opacity="0.9"/>' +
+        '<path d="M90 66l0 42" opacity="0.35" stroke-dasharray="2 3"/>' +
+        '<path d="M150 20v34" opacity="0.6"/>' +
+        '<rect x="146" y="54" width="8" height="20" rx="2" opacity="0.6"/>' +
+        '<path d="M150 74v14" opacity="0.6"/>' +
+        '<text x="26" y="16" font-family="JetBrains Mono, monospace" font-size="6" fill="currentColor" stroke="none" opacity="0.5">pH(t)</text>' +
+        '<text x="168" y="120" font-family="JetBrains Mono, monospace" font-size="6" fill="currentColor" stroke="none" opacity="0.5">t</text>' +
+      '</svg>';
+  }
+
+  journalBodyEl.addEventListener('click', function (e) {
+    const btn = e.target.closest('.j-del');
+    if (!btn) return;
+    e.stopPropagation();
+    const idx = parseInt(btn.getAttribute('data-del'), 10);
+    if (isNaN(idx)) return;
+    state.history.splice(idx, 1);
+    saveHistory();
+    renderJournal();
+    renderTelemetry();
+    drawChart();
+    toast('Запись удалена', 'warn');
+  });
+
+  journalBodyEl.addEventListener('click', function (e) {
+    if (e.target.closest('.j-del')) return;
+    const row = e.target.closest('.j-row');
+    if (!row) return;
+    const idx = parseInt(row.getAttribute('data-index'), 10);
+    if (isNaN(idx)) return;
+    const entry = state.history[idx];
+    if (!entry) return;
+    const p = PRODUCTS.filter(function (x) { return x.id === entry.productId; })[0];
+    if (p) selectProduct(p, { silent: true });
+    setValue(entry.value, false);
+    phInputEl.value = fmt(entry.value);
+    toast('Загружено: ' + entry.productName);
+  });
+
+  $('#btnClearJournal').addEventListener('click', function () {
+    if (state.history.length === 0) return;
+    if (!window.confirm('Очистить журнал измерений? Действие необратимо.')) return;
+    state.history = [];
+    saveHistory();
+    renderJournal();
+    renderTelemetry();
+    drawChart();
+    toast('Журнал очищен', 'warn');
+  });
+
+  /* ==========================================================
+     CSV EXPORT
+     ========================================================== */
+  $('#btnExportCsv').addEventListener('click', function () {
+    if (state.history.length === 0) return;
+    const rows = [['Время', 'Продукт', 'Категория', 'pH', 'Норма', 'Статус', 'Δ', 'Источник']];
+    state.history.slice().reverse().forEach(function (e) {
+      rows.push([
+        dateFull(e.ts) + ' ' + timeShort(e.ts),
+        e.productName, e.category, fmt(e.value),
+        fmt(e.min) + '–' + fmt(e.max),
+        e.status, e.delta > 0 ? fmt(e.delta) : '0,00', 'HACCP'
+      ]);
+    });
+    const csv = '\uFEFF' + rows.map(function (r) {
+      return r.map(function (c) {
+        const s = String(c).replace(/"/g, '""');
+        return /[;"\n]/.test(s) ? '"' + s + '"' : s;
+      }).join(';');
+    }).join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'ph-check-journal-' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    toast('CSV экспортирован');
+  });
+
+  /* ==========================================================
+     TELEMETRY
+     ========================================================== */
+  function renderTelemetry() {
+    $('#tmSession').textContent = sessionId;
+    const last = state.history[0];
+    $('#tmLast').textContent = last ? (timeShort(last.ts) + ' · ' + fmt(last.value)) : '—';
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const countToday = state.history.filter(function (e) { return e.ts >= today.getTime(); }).length;
+    $('#tmCount').textContent = String(countToday);
+    $('#tmCal').textContent = dateFull(calibrationTs);
+  }
+
+  /* ==========================================================
+     LIVE CHART
+     ========================================================== */
+  const chartCanvas = $('#chartCanvas');
+  const chartEmpty = $('#chartEmpty');
+  const chartMeta = $('#chartMeta');
+
+  let chartRaf = null;
+
+  function drawChart() {
+    if (!chartCanvas) return;
+    if (chartRaf) cancelAnimationFrame(chartRaf);
+    chartRaf = requestAnimationFrame(doDrawChart);
+  }
+
+  function doDrawChart() {
+    const wrap = chartCanvas.parentElement;
+    const rect = wrap.getBoundingClientRect();
+    if (rect.width < 20 || rect.height < 20) return;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const W = Math.max(40, rect.width - 24);
+    const H = Math.max(40, rect.height - 22);
+
+    chartCanvas.width = W * dpr;
+    chartCanvas.height = H * dpr;
+    chartCanvas.style.width = W + 'px';
+    chartCanvas.style.height = H + 'px';
+
+    const ctx = chartCanvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+
+    // ---- data
+    const all = state.history.slice().reverse(); // chronological
+    const data = state.product
+      ? all.filter(function (e) { return e.productId === state.product.id; })
+      : all;
+
+    // ---- meta
+    if (chartMeta) {
+      chartMeta.textContent = data.length + ' ' + (state.product ? '· ' + state.product.name : '· все');
+    }
+
+    if (data.length < 2) {
+      chartEmpty.classList.add('visible');
+      return;
+    }
+    chartEmpty.classList.remove('visible');
+
+    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+    const C = {
+      grid:      isDark ? 'rgba(255,255,255,0.055)' : 'rgba(10,14,19,0.08)',
+      text:      isDark ? '#7A8593' : '#7A8593',
+      textDim:   isDark ? '#5D6875' : '#A7B0BB',
+      lime:      isDark ? '#A3E635' : '#4D7C0F',
+      amber:     isDark ? '#F59E0B' : '#B45309',
+      rose:      isDark ? '#FB7185' : '#BE123C',
+      line:      isDark ? 'rgba(163,230,53,0.65)' : 'rgba(77,124,15,0.65)',
+      bandFill:  isDark ? 'rgba(163,230,53,0.10)' : 'rgba(101,163,13,0.12)',
+      bandEdge:  isDark ? 'rgba(163,230,53,0.35)' : 'rgba(101,163,13,0.45)',
+      pointBg:   isDark ? '#0F141B' : '#FFFFFF'
+    };
+
+    // ---- layout
+    const padL = 42, padR = 12, padT = 12, padB = 22;
+    const plotW = W - padL - padR;
+    const plotH = H - padT - padB;
+
+    // ---- Y range
+    let yMin, yMax;
+    if (state.product) {
+      const p = state.product;
+      const margin = Math.max(0.3, (p.max - p.min) * 0.7);
+      yMin = Math.max(0, p.min - margin);
+      yMax = Math.min(14, p.max + margin);
+    } else {
+      const vals = data.map(function (d) { return d.value; });
+      const lo = Math.min.apply(null, vals);
+      const hi = Math.max.apply(null, vals);
+      const pad = Math.max(0.5, (hi - lo) * 0.3);
+      yMin = Math.max(0, lo - pad);
+      yMax = Math.min(14, hi + pad);
+    }
+    if (yMax - yMin < 0.2) { yMin -= 0.1; yMax += 0.1; }
+
+    // ---- scales
+    const N = data.length;
+    const xFor = function (i) {
+      return padL + (N === 1 ? plotW / 2 : (i / (N - 1)) * plotW);
+    };
+    const yFor = function (v) {
+      return padT + plotH - ((v - yMin) / (yMax - yMin)) * plotH;
+    };
+
+    // ---- norm band
+    if (state.product) {
+      const p = state.product;
+      const top = yFor(Math.min(p.max, yMax));
+      const bot = yFor(Math.max(p.min, yMin));
+      if (bot - top > 0.5) {
+        ctx.fillStyle = C.bandFill;
+        ctx.fillRect(padL, top, plotW, bot - top);
+      }
+      // tolerance edges (amber, subtle)
+      const edge = getEdge(p.min, p.max);
+      const outerLow = Math.max(0, p.min - edge);
+      const outerHigh = Math.min(14, p.max + edge);
+      if (p.min > outerLow) {
+        const t1 = yFor(p.min);
+        const b1 = yFor(Math.max(outerLow, yMin));
+        if (b1 - t1 > 0.5) {
+          ctx.fillStyle = isDark ? 'rgba(245,158,11,0.08)' : 'rgba(180,83,9,0.08)';
+          ctx.fillRect(padL, t1, plotW, b1 - t1);
+        }
+      }
+      if (outerHigh > p.max) {
+        const t2 = yFor(Math.min(outerHigh, yMax));
+        const b2 = yFor(p.max);
+        if (b2 - t2 > 0.5) {
+          ctx.fillStyle = isDark ? 'rgba(245,158,11,0.08)' : 'rgba(180,83,9,0.08)';
+          ctx.fillRect(padL, t2, plotW, b2 - t2);
+        }
+      }
+
+      // dashed boundary lines
+      ctx.strokeStyle = C.bandEdge;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 3]);
+      [p.min, p.max].forEach(function (v) {
+        if (v >= yMin && v <= yMax) {
+          const y = yFor(v);
+          ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + plotW, y); ctx.stroke();
+        }
+      });
+      ctx.setLineDash([]);
+    }
+
+    // ---- horizontal grid + Y labels
+    ctx.font = '500 9px "JetBrains Mono", monospace';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    const yTicks = 4;
+    for (let i = 0; i <= yTicks; i++) {
+      const v = yMin + (i / yTicks) * (yMax - yMin);
+      const y = yFor(v);
+      ctx.strokeStyle = C.grid;
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + plotW, y); ctx.stroke();
+      ctx.fillStyle = C.textDim;
+      ctx.fillText(fmt(v, 1), padL - 6, y);
+    }
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+
+    // ---- X labels (times)
+    ctx.font = '500 9px "JetBrains Mono", monospace';
+    ctx.fillStyle = C.textDim;
+    ctx.textAlign = 'center';
+    const stepX = Math.max(1, Math.ceil(N / 6));
+    for (let i = 0; i < N; i += stepX) {
+      const x = xFor(i);
+      ctx.fillText(timeShort(data[i].ts), x, H - 5);
+    }
+    // last label always
+    if (N > 0 && (N - 1) % stepX !== 0) {
+      ctx.fillText(timeShort(data[N - 1].ts), xFor(N - 1), H - 5);
+    }
+    ctx.textAlign = 'left';
+
+    // ---- line
+    ctx.strokeStyle = C.line;
+    ctx.lineWidth = 1.6;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    data.forEach(function (d, i) {
+      const x = xFor(i);
+      const y = yFor(d.value);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // ---- points
+    data.forEach(function (d, i) {
+      const x = xFor(i);
+      const y = yFor(d.value);
+      const color = d.level === 'ok' ? C.lime : d.level === 'near' ? C.amber : C.rose;
+
+      ctx.beginPath();
+      ctx.arc(x, y, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = C.pointBg;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(x, y, 3.2, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    });
+
+    // ---- highlight last point with value
+    const last = data[N - 1];
+    const lastX = xFor(N - 1);
+    const lastY = yFor(last.value);
+    const lastColor = last.level === 'ok' ? C.lime : last.level === 'near' ? C.amber : C.rose;
+
+    ctx.beginPath();
+    ctx.arc(lastX, lastY, 6, 0, Math.PI * 2);
+    ctx.strokeStyle = lastColor;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // label
+    ctx.font = '600 10px "JetBrains Mono", monospace';
+    ctx.fillStyle = lastColor;
+    const labelText = fmt(last.value);
+    const textW = ctx.measureText(labelText).width;
+    let lx = lastX + 8;
+    if (lx + textW > padL + plotW) lx = lastX - textW - 8;
+    let ly = lastY - 8;
+    if (ly < padT + 10) ly = lastY + 14;
+    ctx.fillText(labelText, lx, ly);
+  }
+
+  window.addEventListener('resize', function () {
+    clearTimeout(drawChart._t);
+    drawChart._t = setTimeout(drawChart, 120);
+  });
+
+  /* ==========================================================
+     COPY AS IMAGE
+     ========================================================== */
+  $('#btnCopyImage').addEventListener('click', function () {
+    if (state.value === null || !state.product) return;
+    const p = state.product;
+    const v = state.value;
+    const verdict = computeVerdict(v, p);
+    if (!verdict) return;
+
+    const W = 1000, H = 620;
+    const scale = 2;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = W * scale;
+    canvas.height = H * scale;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(scale, scale);
+
+    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+    const C = isDark ? {
+      bg: '#0F141B', bg2: '#141A23',
+      border: 'rgba(255,255,255,0.12)',
+      text0: '#E9EDF2', text1: '#98A3B2', text2: '#5D6875',
+      lime: '#A3E635', amber: '#F59E0B', rose: '#FB7185'
+    } : {
+      bg: '#FFFFFF', bg2: '#F2F5F8',
+      border: 'rgba(10,14,19,0.14)',
+      text0: '#0D1319', text1: '#4C5766', text2: '#7A8593',
+      lime: '#4D7C0F', amber: '#B45309', rose: '#BE123C'
+    };
+    const accent = verdict.level === 'ok' ? C.lime : verdict.level === 'near' ? C.amber : C.rose;
+
+    ctx.fillStyle = C.bg;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.03)' : 'rgba(10,14,19,0.035)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x <= W; x += 24) { ctx.beginPath(); ctx.moveTo(x + 0.5, 0); ctx.lineTo(x + 0.5, H); ctx.stroke(); }
+    for (let y = 0; y <= H; y += 24) { ctx.beginPath(); ctx.moveTo(0, y + 0.5); ctx.lineTo(W, y + 0.5); ctx.stroke(); }
+
+    ctx.strokeStyle = C.border;
+    roundRect(ctx, 16, 16, W - 32, H - 32, 14);
+    ctx.stroke();
+
+    ctx.strokeStyle = C.lime;
+    ctx.globalAlpha = 0.6;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(20, 32); ctx.lineTo(20, 22); ctx.lineTo(30, 22); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(W - 30, H - 22); ctx.lineTo(W - 20, H - 22); ctx.lineTo(W - 20, H - 32); ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    ctx.fillStyle = C.lime;
+    ctx.font = '600 13px "JetBrains Mono", monospace';
+    ctx.fillText('pH-CHECK PRO · NEURAL_ARCHITECT_PREMIUM++', 48, 62);
+
+    ctx.fillStyle = C.text2;
+    ctx.font = '500 11px "JetBrains Mono", monospace';
+    ctx.fillText('ACIDITY ANALYZER v1.0 · HACCP', 48, 82);
+
+    ctx.strokeStyle = C.border;
+    ctx.beginPath(); ctx.moveTo(48, 100); ctx.lineTo(W - 48, 100); ctx.stroke();
+
+    ctx.fillStyle = C.text0;
+    ctx.font = '600 26px Inter, sans-serif';
+    ctx.fillText(p.name, 48, 146);
+
+    ctx.fillStyle = C.text1;
+    ctx.font = '500 13px "JetBrains Mono", monospace';
+    ctx.fillText(p.category.toUpperCase() + '  ·  ' + p.source, 48, 172);
+
+    ctx.fillStyle = C.text2;
+    ctx.font = '500 11px "JetBrains Mono", monospace';
+    ctx.fillText('НОРМА pH', 48, 214);
+    ctx.fillStyle = C.lime;
+    ctx.font = '600 20px "JetBrains Mono", monospace';
+    ctx.fillText(fmt(p.min) + ' – ' + fmt(p.max), 48, 240);
+
+    ctx.fillStyle = accent;
+    ctx.font = '700 130px "JetBrains Mono", monospace';
+    ctx.fillText(fmt(v), 48, 380);
+
+    ctx.fillStyle = C.text2;
+    ctx.font = '600 16px "JetBrains Mono", monospace';
+    ctx.fillText('pH', 48, 410);
+
+    const stampX = 640, stampY = 190, stampW = 310, stampH = 92;
+
+    ctx.strokeStyle = accent;
+    ctx.lineWidth = 2;
+    roundRect(ctx, stampX, stampY, stampW, stampH, 8);
+    ctx.stroke();
+
+    ctx.fillStyle = accent;
+    ctx.font = '700 20px "JetBrains Mono", monospace';
+    ctx.fillText(verdict.statusText, stampX + 22, stampY + 38);
+
+    ctx.fillStyle = C.text1;
+    ctx.font = '500 12px "JetBrains Mono", monospace';
+    ctx.fillText((verdict.pass ? 'HACCP PASS' : 'HACCP FAIL') + '  ·  Δ ' + fmt(verdict.delta), stampX + 22, stampY + 64);
+
+    ctx.fillStyle = C.text2;
+    ctx.font = '500 11px "JetBrains Mono", monospace';
+    ctx.fillText('ОТКЛОНЕНИЕ', stampX, stampY + 140);
+    ctx.fillStyle = C.text0;
+    ctx.font = '600 24px "JetBrains Mono", monospace';
+    ctx.fillText(verdict.delta > 0 ? 'Δ ' + fmt(verdict.delta) : 'Δ 0,00', stampX, stampY + 170);
+
+    const barX = 48, barY = 480, barW = W - 96, barH = 18;
+    ctx.fillStyle = C.bg2;
+    roundRect(ctx, barX, barY, barW, barH, 4);
+    ctx.fill();
+
+    const nx = barX + (p.min / 14) * barW;
+    const nw = ((p.max - p.min) / 14) * barW;
+    ctx.fillStyle = C.lime;
+    ctx.globalAlpha = 0.85;
+    roundRect(ctx, nx, barY, nw, barH, 3);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    const vx = barX + (v / 14) * barW;
+    ctx.fillStyle = accent;
+    ctx.fillRect(vx - 1.5, barY - 8, 3, barH + 16);
+
+    ctx.fillStyle = C.text2;
+    ctx.font = '500 10px "JetBrains Mono", monospace';
+    ctx.textAlign = 'center';
+    [0, 3.5, 7, 10.5, 14].forEach(function (t) {
+      const tx = barX + (t / 14) * barW;
+      ctx.fillText(String(t).replace('.', ','), tx, barY + barH + 20);
+    });
+    ctx.textAlign = 'left';
+
+    ctx.strokeStyle = C.border;
+    ctx.beginPath(); ctx.moveTo(48, 548); ctx.lineTo(W - 48, 548); ctx.stroke();
+
+    const nowStr = new Date().toLocaleString('ru-RU');
+    ctx.fillStyle = C.text2;
+    ctx.font = '500 10px "JetBrains Mono", monospace';
+    ctx.fillText('Проверка: ' + nowStr + '  ·  ' + sessionId, 48, 572);
+    ctx.fillText('NEURAL_ARCHITECT_PREMIUM++ · ASV_PROD · t.me/ASV_prod', 48, 588);
+
+    canvas.toBlob(function (blob) {
+      if (!blob) { toast('Не удалось создать изображение', 'err'); return; }
+      if (navigator.clipboard && window.ClipboardItem) {
+        try {
+          navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
+            .then(function () { toast('PNG скопирован в буфер'); })
+            .catch(function () { downloadBlob(blob, p.id); });
+        } catch (err) { downloadBlob(blob, p.id); }
+      } else {
+        downloadBlob(blob, p.id);
+      }
+    }, 'image/png');
+  });
+
+  function downloadBlob(blob, productId) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'ph-check-' + productId + '-' + Date.now() + '.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    toast('PNG сохранён');
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    if (w < 2 * r) r = w / 2;
+    if (h < 2 * r) r = h / 2;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  /* ==========================================================
+     SHARE TEXT
+     ========================================================== */
+  $('#btnShareText').addEventListener('click', function () {
+    if (state.value === null || !state.product) return;
+    const p = state.product;
+    const v = state.value;
+    const verdict = computeVerdict(v, p);
+    if (!verdict) return;
+
+    const text =
+      'pH-CHECK PRO · ' + p.name + '\n' +
+      'Измерено: ' + fmt(v) + ' pH\n' +
+      'Норма: ' + fmt(p.min) + ' – ' + fmt(p.max) + ' pH\n' +
+      'Статус: ' + verdict.statusText + (verdict.delta > 0 ? ' · Δ ' + fmt(verdict.delta) : '') + '\n' +
+      'HACCP: ' + (verdict.pass ? 'PASS' : 'FAIL') + '\n' +
+      'NEURAL_ARCHITECT_PREMIUM++ · ASV_PROD';
+
+    if (navigator.share) {
+      navigator.share({ text: text }).catch(function () { copyText(text, 'Текст скопирован'); });
+    } else {
+      copyText(text, 'Текст скопирован');
+    }
+  });
+
+  function copyText(text, okMsg) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(function () { toast(okMsg); })
+        .catch(function () { fallbackCopy(text, okMsg); });
+    } else {
+      fallbackCopy(text, okMsg);
+    }
+  }
+  function fallbackCopy(text, okMsg) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); toast(okMsg); }
+    catch (e) { toast('Не удалось скопировать', 'err'); }
+    document.body.removeChild(ta);
+  }
+
+  /* ==========================================================
+     COPY LINK / HASH STATE
+     ========================================================== */
+  function buildShareUrl() {
+    const params = new URLSearchParams();
+    if (state.product) params.set('product', state.product.id);
+    if (state.value !== null) params.set('value', state.value.toFixed(2));
+    const base = window.location.origin + window.location.pathname;
+    const q = params.toString();
+    return q ? base + '#' + q : base;
+  }
+
+  $('#btnCopyLink').addEventListener('click', function () {
+    const url = buildShareUrl();
+    copyText(url, 'Ссылка скопирована');
+    if (history.replaceState) {
+      const params = new URLSearchParams();
+      if (state.product) params.set('product', state.product.id);
+      if (state.value !== null) params.set('value', state.value.toFixed(2));
+      const q = params.toString();
+      history.replaceState(null, '', q ? '#' + q : window.location.pathname);
+    }
+  });
+
+  function loadFromHash() {
+    const hash = window.location.hash.replace(/^#/, '');
+    if (!hash) return;
+    const params = new URLSearchParams(hash);
+    const productId = params.get('product');
+    const value = params.get('value');
+
+    if (productId) {
+      const p = PRODUCTS.filter(function (x) { return x.id === productId; })[0];
+      if (p) selectProduct(p, { silent: true });
+    }
+    if (value) {
+      const v = parseNum(value);
+      if (v !== null && v >= 0 && v <= 14) {
+        state.value = v;
+        phInputEl.value = fmt(v);
+      }
+    }
+  }
+
+  /* ==========================================================
+     KEYBOARD
+     ========================================================== */
+  document.addEventListener('keydown', function (e) {
+    const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+    const isInput = tag === 'input' || tag === 'textarea';
+
+    if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
+      e.preventDefault();
+      if (paletteOverlay.classList.contains('open')) closePalette();
+      else openPalette();
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      if (paletteOverlay.classList.contains('open')) { e.preventDefault(); closePalette(); return; }
+      if (isInput) {
+        e.preventDefault();
+        if (e.target === phInputEl) { state.value = null; phInputEl.value = ''; updateAll(true); }
+        e.target.blur();
+      }
+      return;
+    }
+
+    if (e.key === '/' && !isInput) { e.preventDefault(); openPalette(); return; }
+
+    if (e.key === 'Enter' && isInput && e.target === phInputEl) {
+      e.preventDefault();
+      if (state.value !== null && state.product) recordCurrent();
+      else if (state.value !== null && !state.product) {
+        toast('Сначала выберите продукт', 'warn');
+        openPalette();
+      }
+    }
+  });
+
+  /* ==========================================================
+     INIT
+     ========================================================== */
+  function init() {
+    initTheme();
+    setStatus('ready');
+    loadHistory();
+    renderJournal();
+    renderTelemetry();
+    updateGaugeZones();
+    updateRail();
+    updateAll(true);
+    loadFromHash();
+    drawChart();
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { updateRail(); drawChart(); });
+    }
+    setTimeout(function () { updateRail(); drawChart(); }, 60);
+    setTimeout(function () { updateRail(); drawChart(); }, 400);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+
+})();
+</script>
+</body>
+</html>
